@@ -32,8 +32,18 @@ class BufferedInputManager : public kage::core::input::BufferedInputManager
     public:
         BufferedInputManager(std::size_t window_handle);
 
-        void setup_keyboard(void);
-        void setup_mouse(void);
+        /* setups keyboard input, returns true on success */
+        bool setup_keyboard(void);
+        /* setups mouse input, returns true on success */
+        bool setup_mouse(void);
+
+        /* input handlers */
+        void set_keyboard_key_pressed_handler(bool (*func)(const OIS::KeyEvent &arg));
+
+    protected:
+        OIS::InputManager *input_manager = NULL;
+        OIS::Keyboard *keyboard = NULL;
+        OIS::Mouse *mouse = NULL;
 };
 
 
