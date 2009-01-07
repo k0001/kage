@@ -3,7 +3,8 @@ INCLUDES = $(shell pkg-config --cflags OGRE OIS) -Iinclude
 CXXFLAGS = -fPIC -O2 -g -Wall -fmessage-length=0 -ggdb -DDEBUG
 
 OBJS = build/kage/application_state.o \
-       build/kage/application.o
+       build/kage/application.o \
+       build/kage/ogre_application.o
 
 LIBS = $(shell pkg-config --libs OGRE OIS)
 

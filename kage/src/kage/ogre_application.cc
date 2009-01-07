@@ -38,18 +38,24 @@ Application::Application(const std::string &conf_path,
     if (plugins_cfg[0] == '/')
         this->plugins_cfg = plugins_cfg;
     else
-        this->plugins_cfg = this->conf_path + plugins_cfg
+        this->plugins_cfg = this->conf_path + plugins_cfg;
 
     if (ogre_cfg[0] == '/')
         this->ogre_cfg = ogre_cfg;
     else
-        this->ogre_cfg = this->conf_path + ogre_cfg
+        this->ogre_cfg = this->conf_path + ogre_cfg;
 
     if (resources_cfg[0] == '/')
         this->resources_cfg = resources_cfg;
     else
-        this->resources_cfg = this->conf_path + resources_cfg
+        this->resources_cfg = this->conf_path + resources_cfg;
 }
+
+void Application::create_root(void)
+{
+    Ogre::Root (this->root);
+}
+
 
 
 } // namespace sys

@@ -26,7 +26,7 @@ namespace kage {
 namespace ogre {
 namespace sys {
 
-class Application : public kage::core::Application
+class Application : public kage::core::sys::Application
 {
 public:
     Application(const std::string &conf_path="",
@@ -44,11 +44,6 @@ protected:
     virtual void setup_render_system(void);
     virtual void create_render_window(void);
 
-    /* Ogre important stuff */
-    Ogre::Root *root;
-    Ogre::RenderWindow *win;
-    std::string log_file_path;
-
     /* filesystem path where to find *.cfg files */
     std::string conf_path;
 
@@ -57,6 +52,10 @@ protected:
     std::string ogre_cfg;
     std::string resources_cfg;
 
+    /* Ogre important stuff */
+    Ogre::Root root;
+    Ogre::RenderWindow *win;
+    std::string log_file_path;
 };
 
 } // namespace sys
