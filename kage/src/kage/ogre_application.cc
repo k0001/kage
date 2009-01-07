@@ -56,7 +56,8 @@ Application::Application(const std::string &name,
 
 void Application::create_root(void)
 {
-    Ogre::Root (this->root);
+    this->root = Ogre::Root(this->plugins_cfg, this->ogre_cfg,
+            this->log_file_path);
 }
 
 void Application::setup_render_system(void)
