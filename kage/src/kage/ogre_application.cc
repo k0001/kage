@@ -59,6 +59,12 @@ void Application::create_root(void)
     Ogre::Root (this->root);
 }
 
+void Application::setup_render_system(void)
+{
+    if (!this->root.restoreConfig() && !this->root.showConfigDialog())
+        throw Ogre::Exception(52, "User canceled the config dialog!",
+                "kage::ogre::sys::Application::setup_render_system()");
+}
 
 
 } // namespace sys
