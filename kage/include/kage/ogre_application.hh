@@ -41,8 +41,8 @@ protected:
     /* Creates Ogre Application Root */
     virtual void create_root(void);
     /* Loads resources */
-    virtual void define_resources(void);
     virtual void setup_render_system(void);
+    virtual void define_resources(void);
     virtual void create_render_window(void);
 
     /* filesystem path where to find relative *.cfg files */

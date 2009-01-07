@@ -91,6 +91,10 @@ void Application::define_resources(void)
     }
 }
 
+void Application::create_render_window(void)
+{
+    this->win = this->root.initialise(true, this->name);
+}
 
 
 } // namespace sys
