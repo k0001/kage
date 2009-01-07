@@ -23,18 +23,18 @@
 #include "kage/application.hh"
 
 namespace kage {
-namespace core {
+namespace ogre {
 namespace sys {
 
-class OgreApplication : public Application
+class Application : public kage::core::Application
 {
 public:
-    OgreApplication(const std::string &conf_path="",
+    Application(const std::string &conf_path="",
             const std::string &plugins_cfg="plugins.cfg",
             const std::string &ogre_cfg="ogre.cfg",
             const std::string &resources_cfg="resources.cfg",
             const std::string &log_file_path="ogre.log");
-    virtual ~OgreApplication(void);
+    virtual ~Application(void);
 
 protected:
     /* Creates Ogre Application Root */
@@ -60,7 +60,7 @@ protected:
 };
 
 } // namespace sys
-} // namespace core
+} // namespace ogre
 } // namespace kage
 
 #endif // OGRE_APPLICATION_HH_
