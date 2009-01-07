@@ -67,6 +67,31 @@ void Application::setup_render_system(void)
                 "kage::ogre::sys::Application::setup_render_system()");
 }
 
+void Application::define_resources(void)
+{
+    std::string sec_name, type_name, arch_name;
+    Ogre::ConfigFile cf;
+    Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
+    Ogre::ConfigFile::SettingsMultiMap *settings;
+    Ogre::ResourceGroupManager *res_group_manager = \
+            &Ogre::ResourceGroupManager::getSingleton();
+
+    cf.load(this->resources_cfg);
+    while (seci.hasMoreElements()) {
+        sec_name = seci.peekNextKey();
+        settings = seci.getNext();
+        for (Ogre::ConfigFile::SettingsMultiMap::iterator i = settings->begin();
+             i != settings->end(); ++i)
+        {
+            type_name = i->first;
+            arch_name = i->second;
+            res_group_manager->addResourceLocation(arch_name, type_name,
+                                                   sec_name);
+        }
+    }
+}
+
+
 
 } // namespace sys
 } // namespace ogre
