@@ -7,19 +7,34 @@ OBJS = build/kage/application_state.o \
 
 LIBS = $(shell pkg-config --libs OGRE OIS)
 
-TARGET = libkage.so
-MAJOR = $(TARGET).1
-REV = $(MAJOR).0
+TARGET_NAME = libkage
+MAJOR = 1
+MINOR = 0
 
-$(TARGET): $(OBJS)
-	$(CXX) $(OBJS) $(LIBS) -shared -Wl,-soname,$(MAJOR) -o $(REV)
-	ln -sf $(REV) $(MAJOR)
-	ln -sf $(MAJOR) $(TARGET)
+SHARED_TARGET = $(TARGET_NAME).so
+SHARED_MAJOR = $(SHARED_TARGET).$(MAJOR)
+SHARED_MINOR = $(SHARED_MAJOR).$(MINOR)
+
+STATIC_TARGET = $(TARGET_NAME).a
+STATIC_MAJOR = $(STATIC_TARGET).$(MAJOR)
+STATIC_MINOR = $(STATIC_MAJOR).$(MINOR)
+
+all: $(STATIC_TARGET) $(SHARED_TARGET)
+
+$(SHARED_TARGET): $(OBJS)
+	$(CXX) $(OBJS) $(LIBS) -shared -Wl,-soname,$(SHARED_MAJOR) -o $(SHARED_MINOR)
+	ln -sf $(SHARED_MINOR) $(SHARED_MAJOR)
+	ln -sf $(SHARED_MAJOR) $(SHARED_TARGET)
+
+$(STATIC_TARGET): $(OBJS)
+	rm -rf $(STATIC_MINOR)
+	ar cqs $(STATIC_MINOR) $(OBJS)
+	ln -sf $(STATIC_MINOR) $(STATIC_MAJOR)
+	ln -sf $(STATIC_MAJOR) $(STATIC_TARGET)
 
 build/kage/%.o: src/kage/%.cc
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $? -o $@
 
-all: $(TARGET)
 
 clean:
-	rm -f $(OBJS) $(TARGET) $(MAJOR) $(REV)
+	rm -f $(OBJS) *.so *.so.* *.a *.a.*
