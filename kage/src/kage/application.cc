@@ -22,8 +22,9 @@ namespace kage {
 namespace core {
 namespace sys {
 
-Application::Application(void)
-    : running(false)
+Application::Application(const std::string &name)
+    : name(name),
+      running(false)
 {
 }
 

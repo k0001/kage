@@ -30,7 +30,7 @@ namespace sys {
 class Application
 {
     public:
-        Application(void);
+        Application(const std::string &name="Kage Application");
         virtual ~Application(void);
 
         /* Entry point for the whole application flow: responsible for running
@@ -56,6 +56,9 @@ class Application
         virtual bool is_running(void) const;
         // should be called when you need to end the game
         virtual void quit(void);
+
+        /* Application name */
+        std::string name;
         /* The stack of Application States */
         std::stack<ApplicationState*> states;
         /* The mainloop flag */
