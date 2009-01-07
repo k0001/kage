@@ -29,11 +29,12 @@ namespace sys {
 class Application : public kage::core::sys::Application
 {
 public:
-    Application(const std::string &conf_path="",
-            const std::string &plugins_cfg="plugins.cfg",
-            const std::string &ogre_cfg="ogre.cfg",
-            const std::string &resources_cfg="resources.cfg",
-            const std::string &log_file_path="ogre.log");
+    Application(const std::string &name="Kage Ogre Application",
+                const std::string &conf_path="",
+                const std::string &plugins_cfg="plugins.cfg",
+                const std::string &ogre_cfg="ogre.cfg",
+                const std::string &resources_cfg="resources.cfg",
+                const std::string &log_file_path="ogre.log");
     virtual ~Application(void);
 
 protected:
@@ -44,7 +45,7 @@ protected:
     virtual void setup_render_system(void);
     virtual void create_render_window(void);
 
-    /* filesystem path where to find *.cfg files */
+    /* filesystem path where to find relative *.cfg files */
     std::string conf_path;
 
     /* config files */

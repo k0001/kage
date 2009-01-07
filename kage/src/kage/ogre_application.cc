@@ -24,12 +24,15 @@ namespace ogre {
 namespace sys {
 
 
-Application::Application(const std::string &conf_path,
-        const std::string &plugins_cfg,
-        const std::string &ogre_cfg,
-        const std::string &resources_cfg,
-        const std::string &log_file_path)
-    : conf_path(conf_path), log_file_path(log_file_path)
+Application::Application(const std::string &name,
+                         const std::string &conf_path,
+                         const std::string &plugins_cfg,
+                         const std::string &ogre_cfg,
+                         const std::string &resources_cfg,
+                         const std::string &log_file_path)
+    : kage::core::sys::Application(name),
+      conf_path(conf_path),
+      log_file_path(log_file_path)
 {
     /* Setup configuration files paths */
     if (this->conf_path.length())
