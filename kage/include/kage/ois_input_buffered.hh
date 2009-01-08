@@ -27,23 +27,49 @@ namespace ois {
 namespace input {
 
 
+class BufferedInputHandler : public OIS::KeyListener, public OIS::MouseListener
+{
+    public:
+        BufferedInputHandler(void);
+        virtual ~BufferedInputHandler(void);
+
+        /* OIS::KeyListener interface */
+        virtual bool keyPressed(const OIS::KeyEvent &arg);
+        virtual bool keyReleased(const OIS::KeyEvent &arg);
+
+        /* OIS::MouseListener interface */
+        virtual bool mouseMoved(const OIS::MouseEvent &arg);
+        virtual bool mousePresed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
+        virtual bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
+};
+
+
 class BufferedInputManager : public kage::core::input::BufferedInputManager
 {
     public:
         BufferedInputManager(std::size_t window_handle);
+        ~BufferedInputManager(void);
 
         /* setups keyboard input, returns true on success */
         bool setup_keyboard(void);
         /* setups mouse input, returns true on success */
         bool setup_mouse(void);
 
-        /* input handlers */
-        void set_keyboard_key_pressed_handler(bool (*func)(const OIS::KeyEvent &arg));
+        /* set input handlers, return true on success */
+        bool set_keyboard_input_handler(BufferedInputHandler &handler);
+        bool set_mouse_input_handler(BufferedInputHandler &handler);
 
     protected:
-        OIS::InputManager *input_manager = NULL;
-        OIS::Keyboard *keyboard = NULL;
-        OIS::Mouse *mouse = NULL;
+        /* input manager */
+        OIS::InputManager *input_manager;
+
+        /* input devices */
+        OIS::Keyboard *keyboard;
+        OIS::Mouse *mouse;
+
+        /* input handlers */
+        BufferedInputHandler *keyboard_handler;
+        BufferedInputHandler *mouse_handler;
 };
 
 

@@ -22,6 +22,41 @@ namespace kage {
 namespace ois {
 namespace input {
 
+/*
+ * BufferedInputHandler
+ */
+
+bool BufferedInputHandler::keyPressed(const OIS::KeyEvent &arg)
+{
+    return true;
+}
+
+bool BufferedInputHandler::keyReleased(const OIS::KeyEvent &arg)
+{
+    return true;
+}
+
+
+bool BufferedInputHandler::mouseMoved(const OIS::MouseEvent &arg)
+{
+    return true;
+}
+
+bool BufferedInputHandler::mousePresed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
+{
+    return true;
+}
+
+bool BufferedInputHandler::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
+{
+    return true;
+}
+
+
+
+/*
+ * BufferedInputManager
+ */
 
 BufferedInputManager::BufferedInputManager(std::size_t window_handle)
 {
@@ -61,6 +96,21 @@ bool BufferedInputManager::setup_mouse(void)
     return true;
 }
 
+bool BufferedInputManager::set_keyboard_input_handler(BufferedInputHandler &handler)
+{
+    if (!this->keyboard)
+        return false;
+    this->keyboard->setEventCallback(&handler);
+    return true;
+}
+
+bool BufferedInputManager::set_mouse_input_handler(BufferedInputHandler &handler)
+{
+    if (!this->mouse)
+        return false;
+    this->mouse->setEventCallback(&handler);
+    return true;
+}
 
 } // namespace input
 } // namespace ois
