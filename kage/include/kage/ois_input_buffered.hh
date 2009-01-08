@@ -59,6 +59,10 @@ class BufferedInputManager : public kage::core::input::BufferedInputManager
         bool set_keyboard_input_handler(BufferedInputHandler &handler);
         bool set_mouse_input_handler(BufferedInputHandler &handler);
 
+        /* unset input handlers */
+        void unset_keyboard_input_handler();
+        void unset_mouse_input_handler();
+
     protected:
         /* input manager */
         OIS::InputManager *input_manager;

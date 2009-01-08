@@ -121,6 +121,16 @@ bool BufferedInputManager::set_mouse_input_handler(BufferedInputHandler &handler
     return true;
 }
 
+void BufferedInputManager::unset_keyboard_input_handler(void)
+{
+    this->keyboard_handler = NULL;
+}
+
+void BufferedInputManager::unset_mouse_input_handler(void)
+{
+    this->mouse_handler = NULL;
+}
+
 } // namespace input
 } // namespace ois
 } // namespace kage
