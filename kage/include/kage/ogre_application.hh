@@ -38,12 +38,14 @@ public:
     virtual ~Application(void);
 
 protected:
-    /* Creates Ogre Application Root */
-    virtual void create_root(void);
-    /* Loads resources */
-    virtual void setup_render_system(void);
-    virtual void define_resources(void);
-    virtual void create_render_window(void);
+    /* Create Ogre Application Root. Return true on success */
+    virtual bool create_root(void);
+    /* Setup Ogre render system. Return true on success */
+    virtual bool setup_render_system(void);
+    /* Define Ogre resources. Return true on success */
+    virtual bool define_resources(void);
+    /* Create Ogre render window. Return true on success */
+    virtual bool create_render_window(void);
 
     /* filesystem path where to find relative *.cfg files */
     std::string conf_path;
@@ -53,10 +55,11 @@ protected:
     std::string ogre_cfg;
     std::string resources_cfg;
 
+    /* log files */
+    std::string ogre_log_file_path;
+
     /* Ogre important stuff */
-    Ogre::Root root;
-    Ogre::RenderWindow *win;
-    std::string log_file_path;
+    Ogre::Root *root;
 };
 
 } // namespace sys

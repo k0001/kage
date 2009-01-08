@@ -24,17 +24,24 @@ namespace ogre {
 namespace sys {
 
 
+/*
+ * kage::ogre::sys::Application
+ *
+ * Controls the workflow of an Ogre powered application.
+ */
+
 Application::Application(const std::string &name,
                          const std::string &conf_path,
                          const std::string &plugins_cfg,
                          const std::string &ogre_cfg,
                          const std::string &resources_cfg,
-                         const std::string &log_file_path)
+                         const std::string &ogre_log_file_path)
     : kage::core::sys::Application(name),
       conf_path(conf_path),
-      log_file_path(log_file_path)
+      ogre_log_file_path(ogre_log_file_path),
+      root(NULL)
 {
-    /* Setup configuration files paths */
+    // Setup configuration files paths
     if (this->conf_path.length())
         this->conf_path += '/';
 
@@ -54,20 +61,29 @@ Application::Application(const std::string &name,
         this->resources_cfg = this->conf_path + resources_cfg;
 }
 
-void Application::create_root(void)
+Application::~Application(void)
 {
-    this->root = Ogre::Root(this->plugins_cfg, this->ogre_cfg,
-            this->log_file_path);
+    delete this->root;
+    this->root = NULL;
 }
 
-void Application::setup_render_system(void)
+bool Application::create_root(void)
 {
-    if (!this->root.restoreConfig() && !this->root.showConfigDialog())
-        throw Ogre::Exception(52, "User canceled the config dialog!",
-                "kage::ogre::sys::Application::setup_render_system()");
+    if (this->root)
+        return false;
+    this->root = new Ogre::Root(this->plugins_cfg, this->ogre_cfg,
+            this->ogre_log_file_path);
+    return (this->root != NULL);
 }
 
-void Application::define_resources(void)
+bool Application::setup_render_system(void)
+{
+    if (!this->root->restoreConfig() && !this->root->showConfigDialog())
+        return false;
+    return true;
+}
+
+bool Application::define_resources(void)
 {
     std::string sec_name, type_name, arch_name;
     Ogre::ConfigFile cf;
@@ -89,11 +105,14 @@ void Application::define_resources(void)
                                                    sec_name);
         }
     }
+    // TODO: realize when to return false.
+    return true;
 }
 
-void Application::create_render_window(void)
+
+bool Application::create_render_window(void)
 {
-    this->win = this->root.initialise(true, this->name);
+    return (this->root->initialise(true, this->name) != NULL);
 }
 
 
