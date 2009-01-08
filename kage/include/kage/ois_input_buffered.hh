@@ -27,26 +27,49 @@ namespace ois {
 namespace input {
 
 
-class BufferedInputHandler : public OIS::KeyListener, public OIS::MouseListener
+/*
+ * kage::ois::input::BufferedInputHandler
+ *
+ * Handles buffered input events through OIS.
+ */
+
+class BufferedInputHandler : public kage::core::input::BufferedInputHandler,
+                             public OIS::KeyListener, public OIS::MouseListener
 {
     public:
-        BufferedInputHandler(void);
-        virtual ~BufferedInputHandler(void);
+        /* kage::core::input::BufferedInputHandler keyboard interface */
+        virtual bool key_pressed(const OIS::KeyEvent &arg);
+        virtual bool key_released(const OIS::KeyEvent &arg);
+
+        /* kage::core::input::BufferedInputHandler mouse interface */
+        virtual bool mouse_moved(const OIS::MouseEvent &arg);
+        virtual bool mouse_presed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
+        virtual bool mouse_released(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
+
 
         /* OIS::KeyListener interface */
-        virtual bool keyPressed(const OIS::KeyEvent &arg);
-        virtual bool keyReleased(const OIS::KeyEvent &arg);
+        /* Definition proxies this OIS methods to the matching methods above */
+        bool keyPressed(const OIS::KeyEvent &arg);
+        bool keyReleased(const OIS::KeyEvent &arg);
 
         /* OIS::MouseListener interface */
-        virtual bool mouseMoved(const OIS::MouseEvent &arg);
-        virtual bool mousePresed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
-        virtual bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
+        /* Definition proxies this OIS methods to the matching methods above */
+        bool mouseMoved(const OIS::MouseEvent &arg);
+        bool mousePresed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
+        bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 };
 
+
+/*
+ * kage::ois::input::BufferedInputManager
+ *
+ * Manages buffered input through OIS.
+ */
 
 class BufferedInputManager : public kage::core::input::BufferedInputManager
 {
     public:
+        /* initializes input manager so that grabs input from window_handle */
         BufferedInputManager(std::size_t window_handle);
         ~BufferedInputManager(void);
 
@@ -60,8 +83,8 @@ class BufferedInputManager : public kage::core::input::BufferedInputManager
         bool set_mouse_input_handler(BufferedInputHandler &handler);
 
         /* unset input handlers */
-        void unset_keyboard_input_handler();
-        void unset_mouse_input_handler();
+        void unset_keyboard_input_handler(void);
+        void unset_mouse_input_handler(void);
 
         /* capture device statuses */
         void capture(void);
@@ -73,10 +96,6 @@ class BufferedInputManager : public kage::core::input::BufferedInputManager
         /* input devices */
         OIS::Keyboard *keyboard;
         OIS::Mouse *mouse;
-
-        /* input handlers */
-        BufferedInputHandler *keyboard_handler;
-        BufferedInputHandler *mouse_handler;
 };
 
 

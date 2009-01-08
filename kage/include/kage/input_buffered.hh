@@ -26,13 +26,61 @@ namespace core {
 namespace input {
 
 
+/*
+ * kage::core::input::BufferedInputHandler
+ *
+ * Abstract base class for buffered input handlers.
+ */
+
+class BufferedInputHandler
+{
+    public:
+        BufferedInputHandler(void);
+        virtual ~BufferedInputHandler(void);
+
+        /* Keyboard event listeners interface */
+        virtual bool key_pressed(void) = 0;
+        virtual bool key_released(void) = 0;
+
+        /* Mouse event listeners interface */
+        virtual bool mouse_moved(void) = 0;
+        virtual bool mouse_presed(void) = 0;
+        virtual bool mouse_released(void) = 0;
+};
+
+
+/*
+ * kage::core::input::BufferedInputManager
+ *
+ * Abstract base class for buffered input managers.
+ */
+
 class BufferedInputManager
 {
     public:
+        BufferedInputManager(void);
         virtual ~BufferedInputManager(void);
 
-        /* Input setup (attach keyboard, mouse, etc...) */
-        virtual bool setup(void) = 0;
+        /* setups keyboard input, returns true on success */
+        virtual bool setup_keyboard(void) = 0;
+        /* setups mouse input, returns true on success */
+        virtual bool setup_mouse(void) = 0;
+
+        /* set input handlers, return true on success */
+        virtual bool set_keyboard_input_handler(BufferedInputHandler &handler) = 0;
+        virtual bool set_mouse_input_handler(BufferedInputHandler &handler) = 0;
+
+        /* unset input handlers */
+        virtual void unset_keyboard_input_handler(void) = 0;
+        virtual void unset_mouse_input_handler(void) = 0;
+
+        /* capture device statuses */
+        virtual void capture(void) = 0;
+
+    protected:
+        /* input handlers */
+        BufferedInputHandler *keyboard_handler;
+        BufferedInputHandler *mouse_handler;
 };
 
 

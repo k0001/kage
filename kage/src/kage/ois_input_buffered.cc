@@ -16,44 +16,71 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 #include "kage/ois_input_buffered.hh"
 
 namespace kage {
 namespace ois {
 namespace input {
 
+
 /*
  * BufferedInputHandler
  */
 
-bool BufferedInputHandler::keyPressed(const OIS::KeyEvent &arg)
+bool BufferedInputHandler::key_pressed(const OIS::KeyEvent &arg)
 {
     return true;
 }
 
-bool BufferedInputHandler::keyReleased(const OIS::KeyEvent &arg)
+bool BufferedInputHandler::key_released(const OIS::KeyEvent &arg)
 {
     return true;
 }
 
-
-bool BufferedInputHandler::mouseMoved(const OIS::MouseEvent &arg)
+bool BufferedInputHandler::mouse_moved(const OIS::MouseEvent &arg)
 {
     return true;
 }
 
-bool BufferedInputHandler::mousePresed(const OIS::MouseEvent &arg,
+bool BufferedInputHandler::mouse_presed(const OIS::MouseEvent &arg,
                                        OIS::MouseButtonID id)
 {
     return true;
 }
 
-bool BufferedInputHandler::mouseReleased(const OIS::MouseEvent &arg,
+bool BufferedInputHandler::mouse_released(const OIS::MouseEvent &arg,
                                          OIS::MouseButtonID id)
 {
     return true;
 }
 
+bool BufferedInputHandler::keyPressed(const OIS::KeyEvent &arg)
+{
+    return this->key_pressed(arg);
+}
+
+bool BufferedInputHandler::keyReleased(const OIS::KeyEvent &arg)
+{
+    return this->key_released(arg);
+}
+
+bool BufferedInputHandler::mouseMoved(const OIS::MouseEvent &arg)
+{
+    return this->mouse_moved(arg);
+}
+
+bool BufferedInputHandler::mousePresed(const OIS::MouseEvent &arg,
+                                       OIS::MouseButtonID id)
+{
+    return this->mouse_presed(arg, id);
+}
+
+bool BufferedInputHandler::mouseReleased(const OIS::MouseEvent &arg,
+                                         OIS::MouseButtonID id)
+{
+    return this->mouse_released(arg, id);
+}
 
 
 /*
@@ -61,8 +88,8 @@ bool BufferedInputHandler::mouseReleased(const OIS::MouseEvent &arg,
  */
 
 BufferedInputManager::BufferedInputManager(std::size_t window_handle)
-    : input_manager(NULL), keyboard(NULL), mouse(NULL), keyboard_handler(NULL),
-      mouse_handler(NULL)
+    : kage::core::input::BufferedInputManager(),
+      input_manager(NULL), keyboard(NULL), mouse(NULL)
 {
     this->input_manager = OIS::InputManager::createInputSystem(window_handle);
 }
