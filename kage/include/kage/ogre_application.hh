@@ -46,6 +46,8 @@ protected:
     virtual bool define_resources(void);
     /* Create Ogre render window. Return true on success */
     virtual bool create_render_window(void);
+    /* Base resource group initialisation */
+    virtual bool initialise_resource_group(void);
 
     /* filesystem path where to find relative *.cfg files */
     std::string conf_path;

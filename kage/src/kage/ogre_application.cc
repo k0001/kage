@@ -115,6 +115,15 @@ bool Application::create_render_window(void)
     return (this->root->initialise(true, this->name) != NULL);
 }
 
+bool Application::initialise_resource_group(void)
+{
+    Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
+    Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+
+    // TODO: realize when to return false.
+    return true;
+}
+
 
 } // namespace sys
 } // namespace ogre
