@@ -20,11 +20,25 @@
 #define APPLICATION_HH_
 
 #include "kage/globals.hh"
-#include "kage/application_state.hh"
+#include "kage/state.hh"
 
 namespace kage {
 namespace core {
 namespace sys {
+
+
+/*
+ * kage::code::sys::ApplicationStat
+ *
+ * An state within an Application.
+ */
+
+class ApplicationState : public kage::core::sys::State
+{
+    public:
+        ApplicationState(void);
+        virtual ~ApplicationState(void);
+};
 
 
 /*
@@ -33,44 +47,16 @@ namespace sys {
  * Controls the workflow of an application.
  */
 
-class Application
+class Application : public kage::core::sys::StateMachine
 {
     public:
         Application(const std::string &name="Kage Application");
         virtual ~Application(void);
 
-        /* Entry point for the whole application flow: responsible for running
-         * init, run and shutdown */
-        void go(void);
-
     protected:
-        /* called when the application starts */
-        virtual void init(void) = 0;
-        // called after the engine has been started, here goes the main loop
-        virtual void run(void);
-        // called when the game engine is over
-        virtual void shutdown(void) = 0;
-
-        // change the current state to a new one
-        virtual void change_state(ApplicationState *state);
-        // pushes a new states onto the stack
-        virtual void push_state(ApplicationState *state);
-        // removes last state
-        virtual void pop_state(void);
-
-        // is the application running?
-        virtual bool is_running(void) const;
-        // should be called when you need to end the game
-        virtual void quit(void);
-
         /* Application name */
         std::string name;
-        /* The stack of Application States */
-        std::stack<ApplicationState*> states;
-        /* The mainloop flag */
-        bool running;
 };
-
 
 
 } // namespace sys

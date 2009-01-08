@@ -22,75 +22,10 @@ namespace kage {
 namespace core {
 namespace sys {
 
+
 Application::Application(const std::string &name)
-    : name(name),
-      running(false)
+    : name(name)
 {
-}
-
-Application::~Application(void)
-{
-    this->shutdown();
-}
-
-bool Application::is_running(void) const
-{
-    return this->running;
-}
-
-void Application::quit(void)
-{
-    this->running = false;
-}
-
-void Application::change_state(ApplicationState *state)
-{
-    // cleanup the current state
-    if (!this->states.empty()) {
-        this->states.top()->shutdown();
-        this->states.pop();
-    }
-    // store and init the new state
-    this->states.push(state);
-    this->states.top()->init(this);
-}
-
-
-void Application::push_state(ApplicationState *state)
-{
-    // pause current state
-    if (!this->states.empty())
-        this->states.top()->pause();
-    // store and init the new state
-    this->states.push(state);
-    this->states.top()->init(this);
-}
-
-void Application::pop_state(void)
-{
-    // cleanup the current state
-    if (!this->states.empty()) {
-        this->states.top()->shutdown();
-        this->states.pop();
-    }
-    // resume previous state (if any)
-    if (!this->states.empty())
-        this->states.top()->resume();
-    else
-        this->running = false;
-}
-
-void Application::go(void)
-{
-    init();
-    run();
-    shutdown();
-}
-
-void Application::run(void)
-{
-    while (this->is_running())
-        this->states.top()->run();
 }
 
 
