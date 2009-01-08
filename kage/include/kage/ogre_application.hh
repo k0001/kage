@@ -21,6 +21,7 @@
 
 #include "kage/globals.hh"
 #include "kage/application.hh"
+#include "kage/input.hh"
 
 namespace kage {
 namespace ogre {
@@ -46,12 +47,15 @@ public:
 
 protected:
     virtual void init(void);
+    virtual void run(void);
     virtual void shutdown(void);
 
     /* Create Ogre Application Root. Return true on success */
     virtual bool create_root(void);
     /* Setup Ogre render system. Return true on success */
     virtual bool setup_render_system(void);
+    /* Setup input sysyem */
+    virtual bool setup_input_manager(void);
     /* Define Ogre resources. Return true on success */
     virtual bool define_resources(void);
     /* Create Ogre render window. Return true on success */
@@ -72,6 +76,9 @@ protected:
 
     /* Ogre important stuff */
     Ogre::Root *root;
+
+    /* Input manager */
+    kage::core::input::InputManager *input_manager;
 };
 
 

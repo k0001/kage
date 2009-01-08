@@ -37,13 +37,16 @@ class BufferedInputHandler : public kage::core::input::BufferedInputHandler,
                              public OIS::KeyListener, public OIS::MouseListener
 {
     public:
+        BufferedInputHandler(void);
+        virtual ~BufferedInputHandler(void);
+
         /* kage::core::input::BufferedInputHandler keyboard interface */
         virtual bool key_pressed(const OIS::KeyEvent &arg);
         virtual bool key_released(const OIS::KeyEvent &arg);
 
         /* kage::core::input::BufferedInputHandler mouse interface */
         virtual bool mouse_moved(const OIS::MouseEvent &arg);
-        virtual bool mouse_presed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
+        virtual bool mouse_pressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
         virtual bool mouse_released(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
 
@@ -55,7 +58,7 @@ class BufferedInputHandler : public kage::core::input::BufferedInputHandler,
         /* OIS::MouseListener interface */
         /* Definition proxies this OIS methods to the matching methods above */
         bool mouseMoved(const OIS::MouseEvent &arg);
-        bool mousePresed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
+        bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
         bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 };
 
@@ -71,27 +74,27 @@ class BufferedInputManager : public kage::core::input::BufferedInputManager
     public:
         /* initializes input manager so that grabs input from window_handle */
         BufferedInputManager(std::size_t window_handle);
-        ~BufferedInputManager(void);
+        virtual ~BufferedInputManager(void);
 
         /* setups keyboard input, returns true on success */
-        bool setup_keyboard(void);
+        virtual bool setup_keyboard(void);
         /* setups mouse input, returns true on success */
-        bool setup_mouse(void);
+        virtual bool setup_mouse(void);
 
         /* set input handlers, return true on success */
-        bool set_keyboard_input_handler(BufferedInputHandler &handler);
-        bool set_mouse_input_handler(BufferedInputHandler &handler);
+        virtual bool set_keyboard_input_handler(BufferedInputHandler &handler);
+        virtual bool set_mouse_input_handler(BufferedInputHandler &handler);
 
         /* unset input handlers */
-        void unset_keyboard_input_handler(void);
-        void unset_mouse_input_handler(void);
+        virtual void unset_keyboard_input_handler(void);
+        virtual void unset_mouse_input_handler(void);
 
         /* capture device statuses */
-        void capture(void);
+        virtual void capture(void);
 
     protected:
         /* input manager */
-        OIS::InputManager *input_manager;
+        OIS::InputManager *ois_input_manager;
 
         /* input devices */
         OIS::Keyboard *keyboard;

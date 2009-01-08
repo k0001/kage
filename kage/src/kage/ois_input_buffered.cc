@@ -28,6 +28,14 @@ namespace input {
  * BufferedInputHandler
  */
 
+BufferedInputHandler::BufferedInputHandler(void)
+{
+}
+
+BufferedInputHandler::~BufferedInputHandler(void)
+{
+}
+
 bool BufferedInputHandler::key_pressed(const OIS::KeyEvent &arg)
 {
     return true;
@@ -43,7 +51,7 @@ bool BufferedInputHandler::mouse_moved(const OIS::MouseEvent &arg)
     return true;
 }
 
-bool BufferedInputHandler::mouse_presed(const OIS::MouseEvent &arg,
+bool BufferedInputHandler::mouse_pressed(const OIS::MouseEvent &arg,
                                        OIS::MouseButtonID id)
 {
     return true;
@@ -70,10 +78,10 @@ bool BufferedInputHandler::mouseMoved(const OIS::MouseEvent &arg)
     return this->mouse_moved(arg);
 }
 
-bool BufferedInputHandler::mousePresed(const OIS::MouseEvent &arg,
+bool BufferedInputHandler::mousePressed(const OIS::MouseEvent &arg,
                                        OIS::MouseButtonID id)
 {
-    return this->mouse_presed(arg, id);
+    return this->mouse_pressed(arg, id);
 }
 
 bool BufferedInputHandler::mouseReleased(const OIS::MouseEvent &arg,
@@ -88,30 +96,36 @@ bool BufferedInputHandler::mouseReleased(const OIS::MouseEvent &arg,
  */
 
 BufferedInputManager::BufferedInputManager(std::size_t window_handle)
-    : kage::core::input::BufferedInputManager(),
-      input_manager(NULL), keyboard(NULL), mouse(NULL)
+    : ois_input_manager(NULL),
+      keyboard(NULL),
+      mouse(NULL)
 {
-    this->input_manager = OIS::InputManager::createInputSystem(window_handle);
+    // must initialize here since these two are members of an abstract class
+    this->keyboard_handler = NULL;
+    this->mouse_handler = NULL;
+
+    this->ois_input_manager = OIS::InputManager::createInputSystem(
+            window_handle);
 }
 
 BufferedInputManager::~BufferedInputManager(void)
 {
     if (this->keyboard) {
-        this->input_manager->destroyInputObject(this->keyboard);
+        this->ois_input_manager->destroyInputObject(this->keyboard);
         this->keyboard = NULL;
     }
     if (this->mouse) {
-        this->input_manager->destroyInputObject(this->mouse);
+        this->ois_input_manager->destroyInputObject(this->mouse);
         this->mouse = NULL;
     }
-    OIS::InputManager::destroyInputSystem(this->input_manager);
-    this->input_manager = NULL;
+    OIS::InputManager::destroyInputSystem(this->ois_input_manager);
+    this->ois_input_manager = NULL;
 }
 
 bool BufferedInputManager::setup_keyboard(void)
 {
     try {
-       this->keyboard = static_cast<OIS::Keyboard*>(this->input_manager->
+       this->keyboard = static_cast<OIS::Keyboard*>(this->ois_input_manager->
                 createInputObject(OIS::OISKeyboard, true));
     }
     catch (const OIS::Exception &e) {
@@ -123,7 +137,7 @@ bool BufferedInputManager::setup_keyboard(void)
 bool BufferedInputManager::setup_mouse(void)
 {
     try {
-       this->mouse = static_cast<OIS::Mouse*>(this->input_manager->
+       this->mouse = static_cast<OIS::Mouse*>(this->ois_input_manager->
                 createInputObject(OIS::OISMouse, true));
     }
     catch (const OIS::Exception &e) {
@@ -132,7 +146,8 @@ bool BufferedInputManager::setup_mouse(void)
     return true;
 }
 
-bool BufferedInputManager::set_keyboard_input_handler(BufferedInputHandler &handler)
+bool BufferedInputManager::set_keyboard_input_handler(
+        BufferedInputHandler &handler)
 {
     if (!this->keyboard)
         return false;
@@ -140,7 +155,8 @@ bool BufferedInputManager::set_keyboard_input_handler(BufferedInputHandler &hand
     return true;
 }
 
-bool BufferedInputManager::set_mouse_input_handler(BufferedInputHandler &handler)
+bool BufferedInputManager::set_mouse_input_handler(
+        BufferedInputHandler &handler)
 {
     if (!this->mouse)
         return false;

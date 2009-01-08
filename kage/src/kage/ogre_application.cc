@@ -17,6 +17,7 @@
  */
 
 #include "kage/ogre_application.hh"
+#include "kage/ois_input_buffered.hh"
 
 
 namespace kage {
@@ -33,7 +34,8 @@ Application::Application(const std::string &name,
     : kage::core::sys::Application(name),
       conf_path(conf_path),
       ogre_log_file_path(ogre_log_file_path),
-      root(NULL)
+      root(NULL),
+      input_manager(NULL)
 {
     // Setup configuration files paths
     if (this->conf_path.length())
@@ -55,6 +57,12 @@ Application::Application(const std::string &name,
         this->resources_cfg = this->conf_path + resources_cfg;
 }
 
+void Application::run(void)
+{
+    while (this->is_running())
+        this->input_manager->capture();
+        this->states.top()->run();
+}
 
 void Application::init(void)
 {
@@ -67,8 +75,14 @@ void Application::init(void)
 
 void Application::shutdown(void)
 {
-    delete this->root;
-    this->root = NULL;
+    if (this->input_manager) {
+        delete this->input_manager;
+        this->input_manager = NULL;
+    }
+    if (this->root) {
+        delete this->root;
+        this->root = NULL;
+    }
 }
 
 bool Application::create_root(void)
@@ -83,6 +97,20 @@ bool Application::create_root(void)
 bool Application::setup_render_system(void)
 {
     if (!this->root->restoreConfig() && !this->root->showConfigDialog())
+        return false;
+    return true;
+}
+
+bool Application::setup_input_manager(void)
+{
+    std::size_t window_handler = 0;
+    Ogre::RenderWindow *win = this->root->getAutoCreatedWindow();
+    win->getCustomAttribute("WINDOW", &window_handler);
+    if (!window_handler)
+        return false;
+    this->input_manager = new kage::ois::input::BufferedInputManager(
+            window_handler);
+    if (!this->input_manager)
         return false;
     return true;
 }
