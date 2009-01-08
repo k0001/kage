@@ -57,11 +57,10 @@ Application::Application(const std::string &name,
         this->resources_cfg = this->conf_path + resources_cfg;
 }
 
-void Application::run(void)
+bool Application::run(void)
 {
-    while (this->is_running())
-        this->input_manager->capture();
-        this->states.top()->run();
+    this->input_manager->capture();
+    return this->states.top()->run();
 }
 
 void Application::init(void)
