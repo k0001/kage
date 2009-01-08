@@ -30,6 +30,7 @@ Application::Application(const std::string &name)
 
 Application::~Application(void)
 {
+    this->shutdown();
 }
 
 bool Application::is_running(void) const

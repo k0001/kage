@@ -45,6 +45,9 @@ public:
     virtual ~Application(void);
 
 protected:
+    virtual void init(void);
+    virtual void shutdown(void);
+
     /* Create Ogre Application Root. Return true on success */
     virtual bool create_root(void);
     /* Setup Ogre render system. Return true on success */

@@ -55,7 +55,17 @@ Application::Application(const std::string &name,
         this->resources_cfg = this->conf_path + resources_cfg;
 }
 
-Application::~Application(void)
+
+void Application::init(void)
+{
+    create_root();
+    setup_render_system();
+    define_resources();
+    create_render_window();
+    initialise_resource_group();
+}
+
+void Application::shutdown(void)
 {
     delete this->root;
     this->root = NULL;

@@ -27,6 +27,12 @@ namespace core {
 namespace sys {
 
 
+/*
+ * kage::core::sys::Application
+ *
+ * Controls the workflow of an application.
+ */
+
 class Application
 {
     public:
@@ -45,7 +51,7 @@ class Application
         // called when the game engine is over
         virtual void shutdown(void) = 0;
 
-        // change the last state to a new one
+        // change the current state to a new one
         virtual void change_state(ApplicationState *state);
         // pushes a new states onto the stack
         virtual void push_state(ApplicationState *state);
