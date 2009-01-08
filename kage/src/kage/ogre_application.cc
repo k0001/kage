@@ -24,12 +24,6 @@ namespace ogre {
 namespace sys {
 
 
-/*
- * kage::ogre::sys::Application
- *
- * Controls the workflow of an Ogre powered application.
- */
-
 Application::Application(const std::string &name,
                          const std::string &conf_path,
                          const std::string &plugins_cfg,

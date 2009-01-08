@@ -26,6 +26,13 @@ namespace kage {
 namespace ogre {
 namespace sys {
 
+
+/*
+ * kage::ogre::sys::Application
+ *
+ * Controls the workflow of an Ogre powered application.
+ */
+
 class Application : public kage::core::sys::Application
 {
 public:
@@ -63,6 +70,7 @@ protected:
     /* Ogre important stuff */
     Ogre::Root *root;
 };
+
 
 } // namespace sys
 } // namespace ogre
