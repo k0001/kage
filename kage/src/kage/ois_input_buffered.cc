@@ -42,12 +42,14 @@ bool BufferedInputHandler::mouseMoved(const OIS::MouseEvent &arg)
     return true;
 }
 
-bool BufferedInputHandler::mousePresed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
+bool BufferedInputHandler::mousePresed(const OIS::MouseEvent &arg,
+                                       OIS::MouseButtonID id)
 {
     return true;
 }
 
-bool BufferedInputHandler::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
+bool BufferedInputHandler::mouseReleased(const OIS::MouseEvent &arg,
+                                         OIS::MouseButtonID id)
 {
     return true;
 }
@@ -59,17 +61,24 @@ bool BufferedInputHandler::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseB
  */
 
 BufferedInputManager::BufferedInputManager(std::size_t window_handle)
+    : input_manager(NULL), keyboard(NULL), mouse(NULL), keyboard_handler(NULL),
+      mouse_handler(NULL)
 {
     this->input_manager = OIS::InputManager::createInputSystem(window_handle);
 }
 
 BufferedInputManager::~BufferedInputManager(void)
 {
-    if (this->keyboard)
+    if (this->keyboard) {
         this->input_manager->destroyInputObject(this->keyboard);
-    if (this->mouse)
+        this->keyboard = NULL;
+    }
+    if (this->mouse) {
         this->input_manager->destroyInputObject(this->mouse);
+        this->mouse = NULL;
+    }
     OIS::InputManager::destroyInputSystem(this->input_manager);
+    this->input_manager = NULL;
 }
 
 bool BufferedInputManager::setup_keyboard(void)
