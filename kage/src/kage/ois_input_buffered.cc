@@ -131,6 +131,15 @@ void BufferedInputManager::unset_mouse_input_handler(void)
     this->mouse_handler = NULL;
 }
 
+void BufferedInputManager::capture(void)
+{
+    if (this->keyboard)
+        this->keyboard->capture();
+    if (this->mouse)
+        this->mouse->capture();
+}
+
+
 } // namespace input
 } // namespace ois
 } // namespace kage

@@ -63,6 +63,9 @@ class BufferedInputManager : public kage::core::input::BufferedInputManager
         void unset_keyboard_input_handler();
         void unset_mouse_input_handler();
 
+        /* capture device statuses */
+        void capture(void);
+
     protected:
         /* input manager */
         OIS::InputManager *input_manager;
