@@ -16,40 +16,39 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "kage/application.hh"
+#include "kage/input_buffered.hh"
 
 namespace kage {
 namespace core {
-namespace sys {
+namespace input {
 
 
 /*
- * ApplicationState
+ * BufferedInputHandler
  */
 
-ApplicationState::ApplicationState(void)
+BufferedInputHandler::BufferedInputHandler(void)
 {
 }
 
-ApplicationState::~ApplicationState(void)
+BufferedInputHandler::~BufferedInputHandler(void)
 {
 }
 
 
 /*
- * Appplication
+ * BufferedInputManager
  */
 
-Application::Application(const std::string &name)
-    : name(name)
+BufferedInputManager::BufferedInputManager(void)
 {
 }
 
-Application::~Application()
+BufferedInputManager::~BufferedInputManager(void)
 {
 }
 
 
-} // namespace sys
+} // namespace input
 } // namespace core
 } // namespace kage

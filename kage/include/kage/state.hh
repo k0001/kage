@@ -35,26 +35,27 @@ class State
         virtual ~State(void);
 
         /* initialize this state attached to a StateMachine */
-        virtual void setup(StateMachine &sm);
+        virtual void setup(StateMachine &sm) = 0;
         /* State cleanup: called before removal. */
-        virtual void shutdown(void);
+        virtual void shutdown(void) = 0;
         /* State execution is paused */
-        virtual void pause(void);
+        virtual void pause(void) = 0;
         /* State excecution is resumed */
-        virtual void resume(void);
+        virtual void resume(void) = 0;
         /* method called on every frame/loop */
-        virtual bool run(void);
+        virtual bool run(void) = 0;
 
         /* check current excecution status */
-        bool is_running(void);
+        bool is_running(void) const;
 
     private:
-        StateMachine *sm;
-        bool running;
-
         /* this ApplicationState can call quit when it needs to remove itself */
-        void quit(void);
+        virtual void quit(void);
 
+        /* the StateMachine this State is attached to */
+        StateMachine *sm;
+        /* is the state runnnig? */
+        bool running;
 };
 
 

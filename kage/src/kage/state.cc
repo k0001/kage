@@ -23,6 +23,32 @@ namespace core {
 namespace sys {
 
 
+/*
+ * State
+ */
+
+State::State(void)
+{
+}
+
+State::~State(void)
+{
+}
+
+bool State::is_running(void) const
+{
+    return this->running;
+}
+
+void State::quit(void)
+{
+    this->running = false;
+}
+
+/*
+ * StateMachine
+ */
+
 StateMachine::StateMachine(void)
     : running(false)
 {
@@ -33,14 +59,22 @@ StateMachine::~StateMachine(void)
     this->shutdown();
 }
 
-bool StateMachine::is_running(void) const
+void StateMachine::go(void)
 {
-    return this->running;
+    this->setup();
+    this->loop();
+    this->shutdown();
 }
 
-void StateMachine::quit(void)
+void StateMachine::loop(void)
 {
-    this->running = false;
+    while (this->running)
+        this->running = this->run();
+}
+
+bool StateMachine::run(void)
+{
+    return this->states.top()->run();
 }
 
 void StateMachine::change_state(State &state)
@@ -54,7 +88,6 @@ void StateMachine::change_state(State &state)
     this->states.push(&state);
     this->states.top()->setup(*this);
 }
-
 
 void StateMachine::push_state(State &state)
 {
@@ -80,22 +113,14 @@ void StateMachine::pop_state(void)
         this->running = false;
 }
 
-void StateMachine::go(void)
+bool StateMachine::is_running(void) const
 {
-    this->setup();
-    this->loop();
-    this->shutdown();
+    return this->running;
 }
 
-void StateMachine::loop(void)
+void StateMachine::quit(void)
 {
-    while (this->running)
-        this->running = this->run();
-}
-
-bool StateMachine::run(void)
-{
-    return this->states.top()->run();
+    this->running = false;
 }
 
 

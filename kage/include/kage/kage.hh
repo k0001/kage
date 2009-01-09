@@ -20,12 +20,12 @@
 #define KAGE_HH_
 
 #include "kage/application.hh"
-#include "kage/application_state.hh"
 #include "kage/globals.hh"
 #include "kage/input.hh"
 #include "kage/input_buffered.hh"
 #include "kage/kage.hh"
 #include "kage/ogre_application.hh"
 #include "kage/ois_input_buffered.hh"
+#include "kage/state.hh"
 
 #endif // APPLICATION_HH_

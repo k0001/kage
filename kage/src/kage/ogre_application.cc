@@ -25,17 +25,34 @@ namespace ogre {
 namespace sys {
 
 
+/*
+ * ApplicationState
+ */
+
+ApplicationState::ApplicationState(void)
+{
+}
+
+ApplicationState::~ApplicationState(void)
+{
+}
+
+
+/*
+ * Application
+ */
+
 Application::Application(const std::string &name,
                          const std::string &conf_path,
                          const std::string &plugins_cfg,
                          const std::string &ogre_cfg,
                          const std::string &resources_cfg,
                          const std::string &ogre_log_file_path)
-    : kage::core::sys::Application(name),
-      conf_path(conf_path),
-      ogre_log_file_path(ogre_log_file_path),
-      root(NULL),
-      input_manager(NULL)
+    : kage::core::sys::Application(name)
+    , conf_path(conf_path)
+    , ogre_log_file_path(ogre_log_file_path)
+    , root(NULL)
+    , input_manager(NULL)
 {
     // Setup configuration files paths
     if (this->conf_path.length())
@@ -57,10 +74,8 @@ Application::Application(const std::string &name,
         this->resources_cfg = this->conf_path + resources_cfg;
 }
 
-bool Application::run(void)
+Application::~Application(void)
 {
-    this->input_manager->capture();
-    return this->states.top()->run();
 }
 
 void Application::setup(void)
@@ -71,6 +86,13 @@ void Application::setup(void)
     create_render_window();
     initialise_resource_group();
 }
+
+bool Application::run(void)
+{
+    this->input_manager->capture();
+    return this->states.top()->run();
+}
+
 
 void Application::shutdown(void)
 {

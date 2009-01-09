@@ -76,14 +76,13 @@ class BufferedInputManager : public kage::core::input::BufferedInputManager
         BufferedInputManager(std::size_t window_handle);
         virtual ~BufferedInputManager(void);
 
-        /* setups keyboard input, returns true on success */
+        /* setup keyboard input, returns true on success */
         virtual bool setup_keyboard(void);
-        /* setups mouse input, returns true on success */
         virtual bool setup_mouse(void);
 
         /* set input handlers, return true on success */
-        virtual bool set_keyboard_input_handler(BufferedInputHandler &handler);
-        virtual bool set_mouse_input_handler(BufferedInputHandler &handler);
+        virtual bool set_keyboard_input_handler(kage::core::input::BufferedInputHandler &handler);
+        virtual bool set_mouse_input_handler(kage::core::input::BufferedInputHandler &handler);
 
         /* unset input handlers */
         virtual void unset_keyboard_input_handler(void);
@@ -99,6 +98,10 @@ class BufferedInputManager : public kage::core::input::BufferedInputManager
         /* input devices */
         OIS::Keyboard *keyboard;
         OIS::Mouse *mouse;
+
+        /* input handlers */
+        BufferedInputHandler *keyboard_handler;
+        BufferedInputHandler *mouse_handler;
 };
 
 

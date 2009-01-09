@@ -62,10 +62,14 @@ class BufferedInputManager : public InputManager
         BufferedInputManager(void);
         virtual ~BufferedInputManager(void);
 
+        /* setup input devices, return true on success */
+        virtual bool setup_keyboard(void) = 0;
+        virtual bool setup_mouse(void) = 0;
+
         /* set input handlers, return true on success */
         // XXX: this methods should be pure virtual, but compilation fails..
-        virtual bool set_keyboard_input_handler(BufferedInputHandler &handler);
-        virtual bool set_mouse_input_handler(BufferedInputHandler &handler);
+        virtual bool set_keyboard_input_handler(BufferedInputHandler &handler) = 0;
+        virtual bool set_mouse_input_handler(BufferedInputHandler &handler) = 0;
 
         /* unset input handlers */
         virtual void unset_keyboard_input_handler(void) = 0;

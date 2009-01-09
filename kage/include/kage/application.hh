@@ -28,7 +28,7 @@ namespace sys {
 
 
 /*
- * kage::code::sys::ApplicationStat
+ * kage::code::sys::ApplicationState
  *
  * An state within an Application.
  */

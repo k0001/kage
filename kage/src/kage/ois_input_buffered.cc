@@ -96,14 +96,12 @@ bool BufferedInputHandler::mouseReleased(const OIS::MouseEvent &arg,
  */
 
 BufferedInputManager::BufferedInputManager(std::size_t window_handle)
-    : ois_input_manager(NULL),
-      keyboard(NULL),
-      mouse(NULL)
+    : ois_input_manager(NULL)
+    , keyboard(NULL)
+    , mouse(NULL)
+    , keyboard_handler(NULL)
+    , mouse_handler(NULL)
 {
-    // must initialize here since these two are members of an abstract class
-    this->keyboard_handler = NULL;
-    this->mouse_handler = NULL;
-
     this->ois_input_manager = OIS::InputManager::createInputSystem(
             window_handle);
 }
@@ -147,20 +145,22 @@ bool BufferedInputManager::setup_mouse(void)
 }
 
 bool BufferedInputManager::set_keyboard_input_handler(
-        BufferedInputHandler &handler)
+        kage::core::input::BufferedInputHandler &handler)
 {
     if (!this->keyboard)
         return false;
-    this->keyboard->setEventCallback(&handler);
+    BufferedInputHandler &ois_bih = static_cast<BufferedInputHandler&>(handler);
+    this->keyboard->setEventCallback(&ois_bih);
     return true;
 }
 
 bool BufferedInputManager::set_mouse_input_handler(
-        BufferedInputHandler &handler)
+        kage::core::input::BufferedInputHandler &handler)
 {
     if (!this->mouse)
         return false;
-    this->mouse->setEventCallback(&handler);
+    BufferedInputHandler &ois_bih = static_cast<BufferedInputHandler&>(handler);
+    this->mouse->setEventCallback(&ois_bih);
     return true;
 }
 
