@@ -63,7 +63,7 @@ bool Application::run(void)
     return this->states.top()->run();
 }
 
-void Application::init(void)
+void Application::setup(void)
 {
     create_root();
     setup_render_system();

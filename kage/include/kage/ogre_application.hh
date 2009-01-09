@@ -46,7 +46,7 @@ public:
     virtual ~Application(void);
 
 protected:
-    virtual void init(void);
+    virtual void setup(void);
     virtual bool run(void);
     virtual void shutdown(void);
 
