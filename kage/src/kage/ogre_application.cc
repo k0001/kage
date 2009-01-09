@@ -56,7 +56,7 @@ Application::Application(const std::string &name,
 }
 
 
-void Application::init(void)
+void Application::setup(void)
 {
     create_root();
     setup_render_system();

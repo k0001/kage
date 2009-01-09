@@ -34,8 +34,8 @@ class State
         State(void);
         virtual ~State(void);
 
-        /* attach this state to a StateMachine */
-        virtual void attach_to(StateMachine &sm);
+        /* initialize this state attached to a StateMachine */
+        virtual void setup(StateMachine &sm);
         /* State cleanup: called before removal. */
         virtual void shutdown(void);
         /* State execution is paused */
@@ -70,7 +70,7 @@ class StateMachine
 
     protected:
         /* called when the StateMachine flow starts */
-        virtual void init(void) = 0;
+        virtual void setup(void) = 0;
         /* called after the engine has been started, here goes the main loop */
         virtual void loop(void);
         /* called when the StateMachine flow is over */

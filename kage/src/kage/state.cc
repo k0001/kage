@@ -50,9 +50,9 @@ void StateMachine::change_state(State &state)
         this->states.top()->shutdown();
         this->states.pop();
     }
-    // store and attach the new state to this
+    // store and initialise the state attached to this
     this->states.push(&state);
-    this->states.top()->attach_to(*this);
+    this->states.top()->setup(*this);
 }
 
 
@@ -61,9 +61,9 @@ void StateMachine::push_state(State &state)
     // pause current state
     if (!this->states.empty())
         this->states.top()->pause();
-    // store and attach the new state to this
+    // store and initialise the state attached to this
     this->states.push(&state);
-    this->states.top()->attach_to(*this);
+    this->states.top()->setup(*this);
 }
 
 void StateMachine::pop_state(void)
@@ -82,9 +82,9 @@ void StateMachine::pop_state(void)
 
 void StateMachine::go(void)
 {
-    init();
-    loop();
-    shutdown();
+    this->setup();
+    this->loop();
+    this->shutdown();
 }
 
 void StateMachine::loop(void)
