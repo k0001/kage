@@ -1,16 +1,21 @@
+.PHONY: clean all
+
 INCLUDES = $(shell pkg-config --cflags OGRE OIS) -Iinclude
 
-CXXFLAGS = -fPIC -O2 -g -Wall -fmessage-length=0 -ggdb -DDEBUG
+CXXFLAGS = -fPIC -O2 -g -Wall -fmessage-length=0 -ggdb -DDEBUG -Wno-deprecated
 
-OBJS = build/kage/application_state.o \
+OBJS = build/kage/state.o \
        build/kage/application.o \
-       build/kage/ogre_application.o
+       build/kage/ogre_application.o \
+       build/kage/input.o \
+       build/kage/input_buffered.o \
+       build/kage/ois_input_buffered.o
 
 LIBS = $(shell pkg-config --libs OGRE OIS)
 
 TARGET_NAME = libkage
-MAJOR = 1
-MINOR = 0
+MAJOR = 0
+MINOR = 1
 
 SHARED_TARGET = $(TARGET_NAME).so
 SHARED_MAJOR = $(SHARED_TARGET).$(MAJOR)
@@ -35,7 +40,6 @@ $(STATIC_TARGET): $(OBJS)
 
 build/kage/%.o: src/kage/%.cc
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $? -o $@
-
 
 clean:
 	rm -f $(OBJS) *.so *.so.* *.a *.a.*

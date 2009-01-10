@@ -16,21 +16,40 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "kage/application_state.hh"
+#ifndef INPUT_HH_
+#define INPUT_HH_
+
+#include "kage/globals.hh"
 
 namespace kage {
 namespace core {
-namespace sys {
+namespace input {
 
-ApplicationState::ApplicationState(void)
+
+/*
+ * kage::core::input::InputManager
+ *
+ * Abstract base class for input system managers.
+ */
+
+class InputManager
 {
-}
+    public:
+        InputManager(void);
+        virtual ~InputManager(void);
 
-ApplicationState::~ApplicationState(void)
-{
-}
+        /* setups keyboard input, returns true on success */
+        virtual bool setup_keyboard(void) = 0;
+        /* setups mouse input, returns true on success */
+        virtual bool setup_mouse(void) = 0;
+
+        /* capture device statuses */
+        virtual void capture(void) = 0;
+};
 
 
-} // namespace sys
+} // namespace input
 } // namespace core
 } // namespace kage
+
+#endif // INPUT_HH_

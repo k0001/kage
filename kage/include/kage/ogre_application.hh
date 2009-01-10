@@ -21,10 +21,24 @@
 
 #include "kage/globals.hh"
 #include "kage/application.hh"
+#include "kage/input.hh"
 
 namespace kage {
 namespace ogre {
 namespace sys {
+
+/*
+ * kage::ogre::sys::ApplicationState
+ *
+ * A State within an Ogre powered application State Machine.
+ */
+
+class ApplicationState : public kage::core::sys::ApplicationState
+{
+    public:
+        ApplicationState(void);
+        virtual ~ApplicationState(void);
+};
 
 
 /*
@@ -35,43 +49,49 @@ namespace sys {
 
 class Application : public kage::core::sys::Application
 {
-public:
-    Application(const std::string &name="Kage Ogre Application",
-                const std::string &conf_path="",
-                const std::string &plugins_cfg="plugins.cfg",
-                const std::string &ogre_cfg="ogre.cfg",
-                const std::string &resources_cfg="resources.cfg",
-                const std::string &log_file_path="ogre.log");
-    virtual ~Application(void);
+    public:
+        Application(const std::string &name="Kage Ogre Application",
+                    const std::string &conf_path="",
+                    const std::string &plugins_cfg="plugins.cfg",
+                    const std::string &ogre_cfg="ogre.cfg",
+                    const std::string &resources_cfg="resources.cfg",
+                    const std::string &log_file_path="ogre.log");
+        virtual ~Application(void);
 
-protected:
-    virtual void init(void);
-    virtual void shutdown(void);
+    protected:
+        virtual void setup(void);
+        virtual bool run(void);
+        virtual void shutdown(void);
 
-    /* Create Ogre Application Root. Return true on success */
-    virtual bool create_root(void);
-    /* Setup Ogre render system. Return true on success */
-    virtual bool setup_render_system(void);
-    /* Define Ogre resources. Return true on success */
-    virtual bool define_resources(void);
-    /* Create Ogre render window. Return true on success */
-    virtual bool create_render_window(void);
-    /* Base resource group initialisation */
-    virtual bool initialise_resource_group(void);
+        /* Create Ogre Application Root. Return true on success */
+        virtual bool create_root(void);
+        /* Setup Ogre render system. Return true on success */
+        virtual bool setup_render_system(void);
+        /* Setup input sysyem */
+        virtual bool setup_input_manager(void);
+        /* Define Ogre resources. Return true on success */
+        virtual bool define_resources(void);
+        /* Create Ogre render window. Return true on success */
+        virtual bool create_render_window(void);
+        /* Base resource group initialisation */
+        virtual bool initialise_resource_group(void);
 
-    /* filesystem path where to find relative *.cfg files */
-    std::string conf_path;
+        /* filesystem path where to find relative *.cfg files */
+        std::string conf_path;
 
-    /* config files */
-    std::string plugins_cfg;
-    std::string ogre_cfg;
-    std::string resources_cfg;
+        /* config files */
+        std::string plugins_cfg;
+        std::string ogre_cfg;
+        std::string resources_cfg;
 
-    /* log files */
-    std::string ogre_log_file_path;
+        /* log files */
+        std::string ogre_log_file_path;
 
-    /* Ogre important stuff */
-    Ogre::Root *root;
+        /* Ogre important stuff */
+        Ogre::Root *root;
+
+        /* Input manager */
+        kage::core::input::InputManager *input_manager;
 };
 
 

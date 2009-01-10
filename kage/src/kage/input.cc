@@ -16,40 +16,27 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "kage/application.hh"
+#include "kage/input.hh"
 
 namespace kage {
 namespace core {
-namespace sys {
+namespace input {
 
 
 /*
- * ApplicationState
+ * InputManager
  */
 
-ApplicationState::ApplicationState(void)
+InputManager::InputManager(void)
 {
 }
 
-ApplicationState::~ApplicationState(void)
-{
-}
-
-
-/*
- * Appplication
- */
-
-Application::Application(const std::string &name)
-    : name(name)
-{
-}
-
-Application::~Application()
+InputManager::~InputManager(void)
 {
 }
 
 
-} // namespace sys
+} // namespace input
 } // namespace core
 } // namespace kage
+
