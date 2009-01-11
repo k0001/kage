@@ -86,6 +86,7 @@ class Application : public kage::core::sys::Application
 
         /* Input manager */
         kage::core::input::InputManager *input_manager;
+        const std::string capture_input_task_name;
 };
 
 
