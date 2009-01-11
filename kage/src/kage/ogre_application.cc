@@ -19,23 +19,9 @@
 #include "kage/ogre_application.hh"
 #include "kage/ois_input_buffered.hh"
 
-
 namespace kage {
 namespace ogre {
 namespace sys {
-
-
-/*
- * ApplicationState
- */
-
-ApplicationState::ApplicationState(void)
-{
-}
-
-ApplicationState::~ApplicationState(void)
-{
-}
 
 
 /*
@@ -78,21 +64,32 @@ Application::~Application(void)
 {
 }
 
-void Application::setup(void)
+void Application::go(void)
 {
-    create_root();
-    setup_render_system();
-    define_resources();
-    create_render_window();
-    initialise_resource_group();
+    if (this->setup())
+        this->run();
+    this->shutdown();
 }
 
-bool Application::run(void)
+bool Application::setup(void)
 {
-    this->input_manager->capture();
-    return this->states.top()->run();
+    if (this->create_root())
+        // log "Failed to create Ogre::Root -- TODO: THROW REAL EXCEPTION";
+        return false;
+    if (this->setup_render_system())
+        // log "Failed to setup Render system -- TODO: THROW REAL EXCEPTION";
+        return false;
+    if (this->define_resources())
+        // log "Failed to define resources -- TODO: THROW REAL EXCEPTION";
+        return false;
+    if (this->create_render_window())
+        // log "Failed to create render window -- TODO: THROW REAL EXCEPTION";
+        return false;
+    if (this->initialise_resource_group())
+        // log "Failed to initialise resource group -- TODO: THROW REAL EXCEPTION";
+        return false;
+    return true;
 }
-
 
 void Application::shutdown(void)
 {

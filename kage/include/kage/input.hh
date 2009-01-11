@@ -20,6 +20,7 @@
 #define INPUT_HH_
 
 #include "kage/globals.hh"
+#include "kage/task.hh"
 
 namespace kage {
 namespace core {
@@ -36,7 +37,7 @@ class InputManager
 {
     public:
         InputManager(void);
-        virtual ~InputManager(void);
+        virtual ~InputManager(void) = 0;
 
         /* setups keyboard input, returns true on success */
         virtual bool setup_keyboard(void) = 0;
@@ -45,6 +46,26 @@ class InputManager
 
         /* capture device statuses */
         virtual void capture(void) = 0;
+};
+
+
+/*
+ * kage::core::input::CaptureInputTask
+ *
+ * Task for capturing input.
+ */
+
+class CaptureInputTask : public kage::core::sys::Task
+{
+    public:
+        /* Creates a new CaptureInputTask who will capture input using ``input_manager`` */
+        CaptureInputTask(InputManager &input_manager);
+        ~CaptureInputTask(void);
+        kage::core::sys::Task::Continuation run(const kage::core::sys::TaskInfo &ti);
+
+    protected:
+        /* The InputManager responsible for capturing input */
+        InputManager* input_manager;
 };
 
 

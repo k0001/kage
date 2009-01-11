@@ -4,12 +4,13 @@ INCLUDES = $(shell pkg-config --cflags OGRE OIS) -Iinclude
 
 CXXFLAGS = -fPIC -O2 -g -Wall -fmessage-length=0 -ggdb -DDEBUG -Wno-deprecated
 
-OBJS = build/kage/state.o \
+OBJS = build/kage/fsm.o \
+       build/kage/task.o \
        build/kage/application.o \
-       build/kage/ogre_application.o \
        build/kage/input.o \
        build/kage/input_buffered.o \
-       build/kage/ois_input_buffered.o
+       build/kage/ois_input_buffered.o \
+       build/kage/ogre_application.o
 
 LIBS = $(shell pkg-config --libs OGRE OIS)
 

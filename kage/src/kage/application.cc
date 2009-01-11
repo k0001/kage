@@ -22,20 +22,6 @@ namespace kage {
 namespace core {
 namespace sys {
 
-
-/*
- * ApplicationState
- */
-
-ApplicationState::ApplicationState(void)
-{
-}
-
-ApplicationState::~ApplicationState(void)
-{
-}
-
-
 /*
  * Appplication
  */
@@ -47,6 +33,11 @@ Application::Application(const std::string &name)
 
 Application::~Application()
 {
+}
+
+void Application::run(void)
+{
+    this->task_mgr.run();
 }
 
 

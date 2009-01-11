@@ -27,19 +27,6 @@ namespace kage {
 namespace ogre {
 namespace sys {
 
-/*
- * kage::ogre::sys::ApplicationState
- *
- * A State within an Ogre powered application State Machine.
- */
-
-class ApplicationState : public kage::core::sys::ApplicationState
-{
-    public:
-        ApplicationState(void);
-        virtual ~ApplicationState(void);
-};
-
 
 /*
  * kage::ogre::sys::Application
@@ -57,10 +44,11 @@ class Application : public kage::core::sys::Application
                     const std::string &resources_cfg="resources.cfg",
                     const std::string &log_file_path="ogre.log");
         virtual ~Application(void);
+        /* App entry point: setup, run and shutdown */
+        virtual void go(void);
 
     protected:
-        virtual void setup(void);
-        virtual bool run(void);
+        virtual bool setup(void);
         virtual void shutdown(void);
 
         /* Create Ogre Application Root. Return true on success */

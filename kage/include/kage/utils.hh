@@ -16,47 +16,33 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef APPLICATION_HH_
-#define APPLICATION_HH_
+#ifndef UTILS_HH_
+#define UTILS_HH_
 
 #include "kage/globals.hh"
-#include "kage/fsm.hh"
-#include "kage/task.hh"
 
 namespace kage {
-namespace core {
-namespace sys {
+namespace utils {
 
 
 /*
- * kage::core::sys::Application
+ * kage::utils::gettimeofdayf
  *
- * Controls the workflow of an application.
+ * Returns the current localtime timestamp as float.
  */
 
-class Application
+float gettimeofdayf(void)
 {
-    public:
-        Application(const std::string &name="Kage Application");
-        virtual ~Application(void);
-
-        /* Starts the Application workflow */
-        virtual void run(void);
-
-    protected:
-        /* Application name */
-        std::string name;
-
-        /* Task Manager */
-        TaskManager task_mgr;
-
-        /* Game Screens FSM */
-        FiniteStateMachine game_screens;
-};
+    struct timeval tv;
+    struct timezone tz;
+    gettimeofday(&tv, &tz);
+    return (static_cast<float>(tv.tv_sec) +
+            static_cast<float>(tv.tv_usec) / 1000000);
+}
 
 
-} // namespace sys
-} // namespace core
+} // namespace utils
 } // namespace kage
 
-#endif // APPLICATION_HH_
+#endif // UTILS_HH_
+

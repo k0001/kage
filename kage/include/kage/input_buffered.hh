@@ -37,7 +37,7 @@ class BufferedInputHandler
 {
     public:
         BufferedInputHandler(void);
-        virtual ~BufferedInputHandler(void);
+        virtual ~BufferedInputHandler(void) = 0;
 
         /* Keyboard event listeners interface */
         virtual bool key_pressed(void) = 0;
@@ -60,7 +60,7 @@ class BufferedInputManager : public InputManager
 {
     public:
         BufferedInputManager(void);
-        virtual ~BufferedInputManager(void);
+        virtual ~BufferedInputManager(void) = 0;
 
         /* setup input devices, return true on success */
         virtual bool setup_keyboard(void) = 0;

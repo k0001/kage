@@ -19,11 +19,19 @@
 #ifndef GLOBALS_HH_
 #define GLOBALS_HH_
 
+// stdlib
 #include <cstdlib>
+#include <deque>
 #include <iostream>
+#include <map>
 #include <stack>
 #include <string>
 
+// sys
+#include <unistd.h>
+#include <sys/time.h>
+
+// third party
 #include <Ogre.h>
 #include <OIS/OIS.h>
 

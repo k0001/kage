@@ -24,7 +24,7 @@ namespace input {
 
 
 /*
- * InputManager
+ * kage::core::input::InputManager
  */
 
 InputManager::InputManager(void)
@@ -33,6 +33,27 @@ InputManager::InputManager(void)
 
 InputManager::~InputManager(void)
 {
+}
+
+
+/*
+ * kage::core::input::CaptureInputTask
+ */
+
+CaptureInputTask::CaptureInputTask(InputManager &input_manager)
+    : input_manager(&input_manager)
+{
+}
+
+CaptureInputTask::~CaptureInputTask(void)
+{
+}
+
+kage::core::sys::Task::Continuation CaptureInputTask::run(
+        const kage::core::sys::TaskInfo &ti)
+{
+    this->input_manager->capture();
+    return this->CONTINUE;
 }
 
 
