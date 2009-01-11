@@ -62,48 +62,63 @@ Application::Application(const std::string &name,
 
 Application::~Application(void)
 {
+    this->cleanup();
 }
 
 void Application::go(void)
 {
-    if (this->setup())
-        this->run();
-    this->shutdown();
+    try {
+        if (this->setup())
+            this->run();
+    }
+    catch ( ... ) {
+        this->cleanup();
+        throw;
+    }
 }
 
 bool Application::setup(void)
 {
-    if (this->create_root())
+    if (this->setup_root())
         // log "Failed to create Ogre::Root -- TODO: THROW REAL EXCEPTION";
         return false;
     if (this->setup_render_system())
         // log "Failed to setup Render system -- TODO: THROW REAL EXCEPTION";
         return false;
-    if (this->define_resources())
+    if (this->setup_resources())
         // log "Failed to define resources -- TODO: THROW REAL EXCEPTION";
         return false;
-    if (this->create_render_window())
+    if (this->setup_render_window())
         // log "Failed to create render window -- TODO: THROW REAL EXCEPTION";
         return false;
-    if (this->initialise_resource_group())
+    if (this->setup_resource_group())
         // log "Failed to initialise resource group -- TODO: THROW REAL EXCEPTION";
         return false;
     return true;
 }
 
-void Application::shutdown(void)
+bool Application::cleanup(void)
 {
-    if (this->input_manager) {
-        delete this->input_manager;
-        this->input_manager = NULL;
-    }
-    if (this->root) {
-        delete this->root;
-        this->root = NULL;
-    }
+    bool fail = false;
+    if (this->cleanup_resource_group())
+        // log "Failed to initialise resource group -- TODO: THROW REAL EXCEPTION";
+        fail = true;
+    if (this->cleanup_render_window())
+        // log "Failed to create render window -- TODO: THROW REAL EXCEPTION";
+        fail = true;
+    if (this->cleanup_resources())
+        // log "Failed to define resources -- TODO: THROW REAL EXCEPTION";
+        fail = true;
+    if (this->cleanup_render_system())
+        // log "Failed to cleanup Render system -- TODO: THROW REAL EXCEPTION";
+        fail = true;
+    if (this->cleanup_root())
+        // log "Failed to create Ogre::Root -- TODO: THROW REAL EXCEPTION";
+        fail = true;;
+    return !fail;
 }
 
-bool Application::create_root(void)
+bool Application::setup_root(void)
 {
     if (this->root)
         return false;
@@ -133,7 +148,7 @@ bool Application::setup_input_manager(void)
     return true;
 }
 
-bool Application::define_resources(void)
+bool Application::setup_resources(void)
 {
     std::string sec_name, type_name, arch_name;
     Ogre::ConfigFile cf;
@@ -160,17 +175,56 @@ bool Application::define_resources(void)
 }
 
 
-bool Application::create_render_window(void)
+bool Application::setup_render_window(void)
 {
     return (this->root->initialise(true, this->name) != NULL);
 }
 
-bool Application::initialise_resource_group(void)
+bool Application::setup_resource_group(void)
 {
     Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
     // TODO: realize when to return false.
+    return true;
+}
+
+
+bool Application::cleanup_root(void)
+{
+    if (this->root) {
+        delete this->root;
+        this->root = NULL;
+    }
+    return true;
+}
+
+bool Application::cleanup_render_system(void)
+{
+    return true;
+}
+
+bool Application::cleanup_input_manager(void)
+{
+    if (this->input_manager) {
+        delete this->input_manager;
+        this->input_manager = NULL;
+    }
+    return true;
+}
+
+bool Application::cleanup_resources(void)
+{
+    return true;
+}
+
+bool Application::cleanup_render_window(void)
+{
+    return true;
+}
+
+bool Application::cleanup_resource_group(void)
+{
     return true;
 }
 

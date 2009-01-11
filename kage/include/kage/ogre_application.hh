@@ -44,25 +44,31 @@ class Application : public kage::core::sys::Application
                     const std::string &resources_cfg="resources.cfg",
                     const std::string &log_file_path="ogre.log");
         virtual ~Application(void);
-        /* App entry point: setup, run and shutdown */
+        /* App entry point: setup, run and cleanup */
         virtual void go(void);
 
     protected:
+        /* Application setup.
+         * Calls each of the setup routines defined below. Returns true on succes */
         virtual bool setup(void);
-        virtual void shutdown(void);
-
-        /* Create Ogre Application Root. Return true on success */
-        virtual bool create_root(void);
-        /* Setup Ogre render system. Return true on success */
+        /* Application setup routines. Returns true on success. */
+        virtual bool setup_root(void);
         virtual bool setup_render_system(void);
-        /* Setup input sysyem */
         virtual bool setup_input_manager(void);
-        /* Define Ogre resources. Return true on success */
-        virtual bool define_resources(void);
-        /* Create Ogre render window. Return true on success */
-        virtual bool create_render_window(void);
-        /* Base resource group initialisation */
-        virtual bool initialise_resource_group(void);
+        virtual bool setup_resources(void);
+        virtual bool setup_render_window(void);
+        virtual bool setup_resource_group(void);
+
+        /* Application cleanup.
+         * Calls each of the cleanup routines defined below. Returns true on succes */
+        virtual bool cleanup(void);
+        /* Application cleanup routines. Returns true on success. */
+        virtual bool cleanup_root(void);
+        virtual bool cleanup_render_system(void);
+        virtual bool cleanup_input_manager(void);
+        virtual bool cleanup_resources(void);
+        virtual bool cleanup_render_window(void);
+        virtual bool cleanup_resource_group(void);
 
         /* filesystem path where to find relative *.cfg files */
         std::string conf_path;
