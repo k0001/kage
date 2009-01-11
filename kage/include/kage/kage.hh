@@ -27,5 +27,6 @@
 #include "kage/ogre_application.hh"
 #include "kage/ois_input_buffered.hh"
 #include "kage/fsm.hh"
+#include "kage/task.hh"
 
 #endif // APPLICATION_HH_
