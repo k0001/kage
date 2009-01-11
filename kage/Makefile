@@ -1,8 +1,10 @@
 .PHONY: clean all
 
-INCLUDES = $(shell pkg-config --cflags OGRE OIS) -Iinclude
+INCLUDES = $(shell pkg-config --cflags OGRE OIS librlog) -Iinclude
 
-CXXFLAGS = -fPIC -O2 -g -Wall -fmessage-length=0 -ggdb -DDEBUG -Wno-deprecated
+CXXFLAGS = -fPIC -O2 -g -Wall -fmessage-length=0 -ggdb -Wno-deprecated
+
+DEFINES = -DDEBUG
 
 OBJS = build/kage/fsm.o \
        build/kage/task.o \
@@ -10,9 +12,10 @@ OBJS = build/kage/fsm.o \
        build/kage/input.o \
        build/kage/input_buffered.o \
        build/kage/ois_input_buffered.o \
-       build/kage/ogre_application.o
+       build/kage/ogre_application.o \
+       build/kage/logging.o
 
-LIBS = $(shell pkg-config --libs OGRE OIS)
+LIBS = $(shell pkg-config --libs OGRE OIS librlog)
 
 TARGET_NAME = libkage
 MAJOR = 0
@@ -40,7 +43,7 @@ $(STATIC_TARGET): $(OBJS)
 	ln -sf $(STATIC_MAJOR) $(STATIC_TARGET)
 
 build/kage/%.o: src/kage/%.cc
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $? -o $@
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $? -o $@
 
 clean:
 	rm -f $(OBJS) *.so *.so.* *.a *.a.*

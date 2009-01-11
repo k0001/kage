@@ -16,24 +16,37 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef GLOBALS_HH_
-#define GLOBALS_HH_
+#ifndef LOGGING_HH_
+#define LOGGING_HH_
 
-// stdlib
-#include <cstdlib>
-#include <deque>
-#include <iostream>
-#include <map>
-#include <stack>
-#include <string>
+#ifndef RLOG_COMPONENT
+    #define RLOG_COMPONENT "libkage"
+#endif
 
-// sys
-#include <unistd.h>
-#include <sys/time.h>
+#include "rlog/rlog.h"
+#include "rlog/RLogChannel.h"
+#include "rlog/StdioNode.h"
 
-// third party
-#include <Ogre.h>
-#include <OIS/OIS.h>
-#include "kage/logging.hh"
+namespace kage {
+namespace core {
+namespace logging {
 
-#endif // GLOBALS_HH_
+/* Logging level */
+enum LoggingLevel {
+    LOGLEVEL_ERROR,
+    LOGLEVEL_WARNING,
+    LOGLEVEL_INFO,
+    LOGLEVEL_DEBUG
+};
+
+/* Setups logging to out_stream and err_stream */
+void rlog_stdio_setup(LoggingLevel log_level=LOGLEVEL_WARNING,
+        FILE &out_file=*stdout, FILE &err_file=*stderr);
+
+
+} // namespace logging
+} // namespace core
+} // namespace kage
+
+
+#endif // LOGGING_HH_
