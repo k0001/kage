@@ -115,13 +115,22 @@ bool Application::setup(void)
         return false;
     }
 
-    if (!this->setup_resource_group()) {
+    if (this->setup_resource_group()) {
         rInfo("Resource group ready");
     }
     else {
         rError("Failed to initialise resource group");
         return false;
     }
+
+    if (this->setup_input_manager()) {
+        rInfo("Input manager ready");
+    }
+    else {
+        rError("Failed to setup input manager");
+        return false;
+    }
+
 
     return true;
 }
@@ -130,6 +139,14 @@ bool Application::cleanup(void)
 {
     rInfo("Cleaning up Ogre Application");
     bool fail = false;
+
+    if (this->cleanup_input_manager()) {
+        rInfo("Cleaned up input manager");
+    }
+    else {
+        rError("Failed to cleanup input manager");
+        return false;
+    }
 
     if (this->cleanup_resource_group()) {
         rInfo("Cleaned up resource group");
@@ -185,7 +202,8 @@ bool Application::setup_root(void)
 
 bool Application::setup_render_system(void)
 {
-    if (!this->root->restoreConfig() && !this->root->showConfigDialog())
+    // if (this->root->restoreConfig() && !this->root->showConfigDialog())
+    if (!this->root->showConfigDialog())
         return false;
     return true;
 }
@@ -213,7 +231,16 @@ bool Application::setup_resources(void)
     Ogre::ResourceGroupManager *res_group_manager = \
             &Ogre::ResourceGroupManager::getSingleton();
 
-    cf.load(this->resources_cfg);
+    try {
+        cf.load(this->resources_cfg);
+    }
+    catch (Ogre::Exception &e) {
+        if (e.getNumber() == 6) {
+            rError("File not found: %s", this->resources_cfg.c_str());
+            return false;
+        }
+    }
+
     while (seci.hasMoreElements()) {
         sec_name = seci.peekNextKey();
         settings = seci.getNext();
