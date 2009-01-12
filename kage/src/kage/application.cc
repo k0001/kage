@@ -37,6 +37,7 @@ Application::~Application()
 
 void Application::run(void)
 {
+    rInfo("Application's Task manager started running");
     this->task_mgr.run();
 }
 

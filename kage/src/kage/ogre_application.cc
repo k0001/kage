@@ -68,6 +68,7 @@ Application::~Application(void)
 
 void Application::go(void)
 {
+    rInfo("Ogre Application starting...");
     try {
         if (this->setup())
             this->run();
@@ -80,42 +81,96 @@ void Application::go(void)
 
 bool Application::setup(void)
 {
-    if (this->setup_root())
-        // log "Failed to create Ogre::Root -- TODO: THROW REAL EXCEPTION";
+    rInfo("Setting up Ogre Application");
+
+    if (this->setup_root()) {
+        rInfo("Ogre::Root ready");
+    }
+    else {
+        rError("Failed to create Ogre::Root");
         return false;
-    if (this->setup_render_system())
-        // log "Failed to setup Render system -- TODO: THROW REAL EXCEPTION";
+    }
+
+    if (this->setup_render_system()) {
+        rInfo("Render system ready");
+    }
+    else {
+        rError("Failed to setup Render system");
         return false;
-    if (this->setup_resources())
-        // log "Failed to define resources -- TODO: THROW REAL EXCEPTION";
+    }
+
+    if (this->setup_resources()) {
+        rInfo("Resources ready");
+    }
+    else {
+        rError("Failed to define resources");
         return false;
-    if (this->setup_render_window())
-        // log "Failed to create render window -- TODO: THROW REAL EXCEPTION";
+    }
+
+    if (this->setup_render_window()) {
+        rInfo("Render window ready");
+    }
+    else {
+        rError("Failed to create render window");
         return false;
-    if (this->setup_resource_group())
-        // log "Failed to initialise resource group -- TODO: THROW REAL EXCEPTION";
+    }
+
+    if (!this->setup_resource_group()) {
+        rInfo("Resource group ready");
+    }
+    else {
+        rError("Failed to initialise resource group");
         return false;
+    }
+
     return true;
 }
 
 bool Application::cleanup(void)
 {
+    rInfo("Cleaning up Ogre Application");
     bool fail = false;
-    if (this->cleanup_resource_group())
-        // log "Failed to initialise resource group -- TODO: THROW REAL EXCEPTION";
+
+    if (this->cleanup_resource_group()) {
+        rInfo("Cleaned up resource group");
+    }
+    else {
+        rError("Failed to cleanup resource group");
         fail = true;
-    if (this->cleanup_render_window())
-        // log "Failed to create render window -- TODO: THROW REAL EXCEPTION";
+    }
+
+    if (this->cleanup_render_window()) {
+        rInfo("Cleaned up render window");
+    }
+    else {
+        rError("Failed to cleanup render window");
         fail = true;
-    if (this->cleanup_resources())
-        // log "Failed to define resources -- TODO: THROW REAL EXCEPTION";
+    }
+
+    if (this->cleanup_resources()) {
+        rInfo("Cleaned up resources");
+    }
+    else {
+        rError("Failed to cleanup resources");
         fail = true;
-    if (this->cleanup_render_system())
-        // log "Failed to cleanup Render system -- TODO: THROW REAL EXCEPTION";
+    }
+
+    if (this->cleanup_render_system()) {
+        rInfo("Cleaned up render system");
+    }
+    else {
+        rError("Failed to cleanup Render system");
         fail = true;
-    if (this->cleanup_root())
-        // log "Failed to create Ogre::Root -- TODO: THROW REAL EXCEPTION";
-        fail = true;;
+    }
+
+    if (this->cleanup_root()) {
+        rInfo("Cleaned up Ogre::Root");
+    }
+    else {
+        rError("Failed to cleanup Ogre::Root");
+        fail = true;
+    }
+
     return !fail;
 }
 
@@ -214,8 +269,7 @@ bool Application::cleanup_input_manager(void)
             this->task_mgr.remove_task(this->capture_input_task_name);
         }
         catch ( ... ) {
-            // TODO: Expicitily catch TaskManager Exceptions
-            std::cout << __FILE__ << ":" << __LINE__ << " TODO " << std::endl;
+            rError("...SOMETHING BAD HAPPENED!");
             return false;
         }
     }
