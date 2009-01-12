@@ -1,6 +1,8 @@
 .PHONY: clean all
 
-INCLUDES = $(shell pkg-config --cflags OGRE OIS librlog) -Iinclude
+INCLUDES = $(shell pkg-config --cflags OGRE OIS liblog4cxx) -Iinclude
+
+LIBS = $(shell pkg-config --libs OGRE OIS liblog4cxx)
 
 CXXFLAGS = -fPIC -O2 -g -Wall -fmessage-length=0 -ggdb -Wno-deprecated
 
@@ -14,8 +16,6 @@ OBJS = build/kage/fsm.o \
        build/kage/ois_input_buffered.o \
        build/kage/ogre_application.o \
        build/kage/logging.o
-
-LIBS = $(shell pkg-config --libs OGRE OIS librlog)
 
 TARGET_NAME = libkage
 MAJOR = 0

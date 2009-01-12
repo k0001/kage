@@ -23,21 +23,9 @@ namespace core {
 namespace logging {
 
 
-void rlog_stdio_setup(LoggingLevel log_level, FILE &out_file, FILE &err_file)
+void setup_logging(void)
 {
-    int log_flags = rlog::StdioNode::OutputColor | \
-                    rlog::StdioNode::OutputContext | \
-                    rlog::StdioNode::OutputChannel;
-    static rlog::StdioNode err_log(fileno(&err_file), log_flags);
-    static rlog::StdioNode out_log(fileno(&out_file), log_flags);
-    if (log_level == LOGLEVEL_DEBUG)
-        out_log.subscribeTo(RLOG_CHANNEL("debug"));
-    if (log_level >= LOGLEVEL_INFO)
-        out_log.subscribeTo(RLOG_CHANNEL("info"));
-    if (log_level >= LOGLEVEL_WARNING)
-        out_log.subscribeTo(RLOG_CHANNEL("warning"));
-    if (log_level >= LOGLEVEL_ERROR)
-        err_log.subscribeTo(RLOG_CHANNEL("error"));
+    log4cxx::BasicConfigurator::configure();
 }
 
 

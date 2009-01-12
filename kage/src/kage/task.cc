@@ -19,6 +19,10 @@
 #include "kage/task.hh"
 #include "kage/utils.hh"
 
+static log4cxx::LoggerPtr logger(log4cxx::Logger::getLogger(
+        "kage.core.sys.task"));
+
+
 namespace kage {
 namespace core {
 namespace sys {
@@ -73,7 +77,7 @@ unsigned int TaskManager::add_task(std::string name, Task &task)
             return (*dit)->id;
     TaskInfo ti = this->create_TaskInfo(name, task);
     this->task_add_queue.push_back(&ti);
-    rDebug("Queued task %s for addition", name.c_str());
+    LOG4CXX_DEBUG(logger, "Queued task for addition: " << name);
     return ti.id;
 }
 
@@ -94,7 +98,7 @@ void TaskManager::remove_task(unsigned int id)
             // task already removed, no need to remove it again
             return;
     this->task_rem_queue.push_back(*dit);
-    rDebug("Queued task %s for removal", (*dit)->name.c_str());
+    LOG4CXX_DEBUG(logger, "Queued task for removal: " << (*dit)->name);
 }
 
 void TaskManager::remove_task(std::string name)
@@ -114,7 +118,7 @@ void TaskManager::remove_task(std::string name)
             // task already removed, no need to remove it again
             return;
     this->task_rem_queue.push_back(*dit);
-    rDebug("Queued task %s for removal", name.c_str());
+    LOG4CXX_DEBUG(logger, "Queued task for removal: " << name);
 }
 
 void TaskManager::remove_task(Task &task)
@@ -131,7 +135,7 @@ void TaskManager::remove_task(Task &task)
                     ; ++dit)
             if (dit == this->task_rem_queue.end()) {
                 this->task_rem_queue.push_back(*vit);
-                rDebug("Queued task %s for removal", (*dit)->name.c_str());
+                LOG4CXX_DEBUG(logger, "Queued task for removal: " << (*dit)->name);
             }
         }
     }
@@ -181,7 +185,7 @@ void TaskManager::rem_queued_tasks(void)
             ;
         this->tasks.erase(it);
         this->task_rem_queue.pop_front();
-        rDebug("Removed task %s", ti->name.c_str());
+        LOG4CXX_DEBUG(logger, "Removed task " << ti->name);
         this->destroy_TaskInfo(*ti);
     }
 }
@@ -192,7 +196,7 @@ void TaskManager::add_queued_tasks(void)
         TaskInfo *ti = this->task_add_queue.front();
         this->tasks.push_back(ti);
         this->task_add_queue.pop_front();
-        rDebug("Added task %s", ti->name.c_str());
+        LOG4CXX_DEBUG(logger, "Added task " << ti->name);
     }
 }
 
@@ -208,13 +212,13 @@ TaskInfo& TaskManager::create_TaskInfo(std::string name, Task &task)
     ti->last_run = 0.0;
     ti->active_time = 0.0;
     ti->frame = 0;
-    rDebug("Created TaskInfo %d for Task %s", ti->id, name.c_str());
+    LOG4CXX_DEBUG(logger, "Created TaskInfo " << ti->id << " for Task " << name);
     return *ti;
 }
 
 inline void TaskManager::destroy_TaskInfo(TaskInfo &ti)
 {
-    rDebug("Removing TaskInfo %d for Task %s", ti.id, ti.name.c_str());
+    LOG4CXX_DEBUG(logger, "Removing TaskInfo " << ti.id << " for Task " << ti.name);
     delete &ti;
 }
 

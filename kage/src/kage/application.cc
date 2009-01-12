@@ -18,6 +18,10 @@
 
 #include "kage/application.hh"
 
+static log4cxx::LoggerPtr logger(log4cxx::Logger::getLogger(
+        "kage.core.sys.application"));
+
+
 namespace kage {
 namespace core {
 namespace sys {
@@ -37,7 +41,7 @@ Application::~Application()
 
 void Application::run(void)
 {
-    rInfo("Application's Task manager started running");
+    LOG4CXX_INFO(logger, "Application's Task manager started running");
     this->task_mgr.run();
 }
 

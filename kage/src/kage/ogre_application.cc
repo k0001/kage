@@ -19,6 +19,10 @@
 #include "kage/ogre_application.hh"
 #include "kage/ois_input_buffered.hh"
 
+static log4cxx::LoggerPtr logger(log4cxx::Logger::getLogger(
+        "kage.ogre.sys.application"));
+
+
 namespace kage {
 namespace ogre {
 namespace sys {
@@ -68,7 +72,7 @@ Application::~Application(void)
 
 void Application::go(void)
 {
-    rInfo("Ogre Application starting...");
+    LOG4CXX_INFO(logger, "Ogre Application starting...");
     try {
         if (this->setup())
             this->run();
@@ -81,53 +85,53 @@ void Application::go(void)
 
 bool Application::setup(void)
 {
-    rInfo("Setting up Ogre Application");
+    LOG4CXX_INFO(logger, "Setting up Ogre Application");
 
     if (this->setup_root()) {
-        rInfo("Ogre::Root ready");
+        LOG4CXX_INFO(logger, "Ogre::Root ready");
     }
     else {
-        rError("Failed to create Ogre::Root");
+        LOG4CXX_ERROR(logger, "Failed to create Ogre::Root");
         return false;
     }
 
     if (this->setup_render_system()) {
-        rInfo("Render system ready");
+        LOG4CXX_INFO(logger, "Render system ready");
     }
     else {
-        rError("Failed to setup Render system");
+        LOG4CXX_ERROR(logger, "Failed to setup Render system");
         return false;
     }
 
     if (this->setup_resources()) {
-        rInfo("Resources ready");
+        LOG4CXX_INFO(logger, "Resources ready");
     }
     else {
-        rError("Failed to define resources");
+        LOG4CXX_ERROR(logger, "Failed to define resources");
         return false;
     }
 
     if (this->setup_render_window()) {
-        rInfo("Render window ready");
+        LOG4CXX_INFO(logger, "Render window ready");
     }
     else {
-        rError("Failed to create render window");
+        LOG4CXX_ERROR(logger, "Failed to create render window");
         return false;
     }
 
     if (this->setup_resource_group()) {
-        rInfo("Resource group ready");
+        LOG4CXX_INFO(logger, "Resource group ready");
     }
     else {
-        rError("Failed to initialise resource group");
+        LOG4CXX_ERROR(logger, "Failed to initialise resource group");
         return false;
     }
 
     if (this->setup_input_manager()) {
-        rInfo("Input manager ready");
+        LOG4CXX_INFO(logger, "Input manager ready");
     }
     else {
-        rError("Failed to setup input manager");
+        LOG4CXX_ERROR(logger, "Failed to setup input manager");
         return false;
     }
 
@@ -137,54 +141,54 @@ bool Application::setup(void)
 
 bool Application::cleanup(void)
 {
-    rInfo("Cleaning up Ogre Application");
+    LOG4CXX_INFO(logger, "Cleaning up Ogre Application");
     bool fail = false;
 
     if (this->cleanup_input_manager()) {
-        rInfo("Cleaned up input manager");
+        LOG4CXX_INFO(logger, "Cleaned up input manager");
     }
     else {
-        rError("Failed to cleanup input manager");
+        LOG4CXX_ERROR(logger, "Failed to cleanup input manager");
         return false;
     }
 
     if (this->cleanup_resource_group()) {
-        rInfo("Cleaned up resource group");
+        LOG4CXX_INFO(logger, "Cleaned up resource group");
     }
     else {
-        rError("Failed to cleanup resource group");
+        LOG4CXX_ERROR(logger, "Failed to cleanup resource group");
         fail = true;
     }
 
     if (this->cleanup_render_window()) {
-        rInfo("Cleaned up render window");
+        LOG4CXX_INFO(logger, "Cleaned up render window");
     }
     else {
-        rError("Failed to cleanup render window");
+        LOG4CXX_ERROR(logger, "Failed to cleanup render window");
         fail = true;
     }
 
     if (this->cleanup_resources()) {
-        rInfo("Cleaned up resources");
+        LOG4CXX_INFO(logger, "Cleaned up resources");
     }
     else {
-        rError("Failed to cleanup resources");
+        LOG4CXX_ERROR(logger, "Failed to cleanup resources");
         fail = true;
     }
 
     if (this->cleanup_render_system()) {
-        rInfo("Cleaned up render system");
+        LOG4CXX_INFO(logger, "Cleaned up render system");
     }
     else {
-        rError("Failed to cleanup Render system");
+        LOG4CXX_ERROR(logger, "Failed to cleanup Render system");
         fail = true;
     }
 
     if (this->cleanup_root()) {
-        rInfo("Cleaned up Ogre::Root");
+        LOG4CXX_INFO(logger, "Cleaned up Ogre::Root");
     }
     else {
-        rError("Failed to cleanup Ogre::Root");
+        LOG4CXX_ERROR(logger, "Failed to cleanup Ogre::Root");
         fail = true;
     }
 
@@ -236,7 +240,7 @@ bool Application::setup_resources(void)
     }
     catch (Ogre::Exception &e) {
         if (e.getNumber() == 6) {
-            rError("File not found: %s", this->resources_cfg.c_str());
+            LOG4CXX_ERROR(logger, "File not found: " << this->resources_cfg);
             return false;
         }
     }
@@ -296,7 +300,7 @@ bool Application::cleanup_input_manager(void)
             this->task_mgr.remove_task(this->capture_input_task_name);
         }
         catch ( ... ) {
-            rError("...SOMETHING BAD HAPPENED!");
+            LOG4CXX_ERROR(logger, "...SOMETHING BAD HAPPENED!");
             return false;
         }
     }

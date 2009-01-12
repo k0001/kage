@@ -19,29 +19,16 @@
 #ifndef LOGGING_HH_
 #define LOGGING_HH_
 
-#ifndef RLOG_COMPONENT
-    #define RLOG_COMPONENT "libkage"
-#endif
-
-#include "rlog/rlog.h"
-#include "rlog/RLogChannel.h"
-#include "rlog/StdioNode.h"
+#include <log4cxx/logger.h>
+#include <log4cxx/basicconfigurator.h>
 
 namespace kage {
 namespace core {
 namespace logging {
 
-/* Logging level */
-enum LoggingLevel {
-    LOGLEVEL_ERROR,
-    LOGLEVEL_WARNING,
-    LOGLEVEL_INFO,
-    LOGLEVEL_DEBUG
-};
 
 /* Setups logging to out_stream and err_stream */
-void rlog_stdio_setup(LoggingLevel log_level=LOGLEVEL_WARNING,
-        FILE &out_file=*stdout, FILE &err_file=*stderr);
+void setup_logging(void);
 
 
 } // namespace logging
