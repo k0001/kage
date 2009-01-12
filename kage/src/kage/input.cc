@@ -18,6 +18,10 @@
 
 #include "kage/input.hh"
 
+static log4cxx::LoggerPtr logger(log4cxx::Logger::getLogger(
+        "kage.core.input"));
+
+
 namespace kage {
 namespace core {
 namespace input {

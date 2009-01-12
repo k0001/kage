@@ -43,6 +43,7 @@ void Application::run(void)
 {
     LOG4CXX_INFO(logger, "Application's Task manager started running");
     this->task_mgr.run();
+
 }
 
 

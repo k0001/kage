@@ -66,19 +66,23 @@ unsigned int TaskManager::add_task(std::string name, Task &task)
 {
     // O(2n)
     std::vector<TaskInfo*>::const_iterator vit;
-    for (vit = this->tasks.begin(); vit != this->tasks.end(); ++vit)
-        if ((*vit)->name == name)
+    for (vit = this->tasks.begin(); vit != this->tasks.end(); ++vit) {
+        if ((*vit)->name == name) {
             throw "Task already exists -- TODO: THROW REAL EXCEPTION";
+        }
+    }
     std::deque<TaskInfo*>::const_iterator dit;
     for (dit = this->task_add_queue.begin(); dit != this->task_add_queue.end()
-            ; ++dit)
-        if ((*dit)->name == name)
+            ; ++dit) {
+        if ((*dit)->name == name) {
             // task already added, no need to add name again
             return (*dit)->id;
-    TaskInfo ti = this->create_TaskInfo(name, task);
-    this->task_add_queue.push_back(&ti);
+        }
+    }
+    TaskInfo *ti = &this->create_TaskInfo(name, task);
+    this->task_add_queue.push_back(ti);
     LOG4CXX_DEBUG(logger, "Queued task for addition: " << name);
-    return ti.id;
+    return ti->id;
 }
 
 void TaskManager::remove_task(unsigned int id)
@@ -93,10 +97,12 @@ void TaskManager::remove_task(unsigned int id)
         throw "Task does not exist -- TODO: THROW REAL EXCEPTION";
     std::deque<TaskInfo*>::const_iterator dit;
     for (dit = this->task_rem_queue.begin(); dit != this->task_rem_queue.end()
-            ; ++dit)
-        if ((*dit)->id == id)
+            ; ++dit) {
+        if ((*dit)->id == id) {
             // task already removed, no need to remove it again
             return;
+        }
+    }
     this->task_rem_queue.push_back(*dit);
     LOG4CXX_DEBUG(logger, "Queued task for removal: " << (*dit)->name);
 }
@@ -113,10 +119,12 @@ void TaskManager::remove_task(std::string name)
         throw "Task does not exist -- TODO: THROW REAL EXCEPTION";
     std::deque<TaskInfo*>::const_iterator dit;
     for (dit = this->task_rem_queue.begin(); dit != this->task_rem_queue.end()
-            ; ++dit)
-        if ((*dit)->name == name)
+            ; ++dit) {
+        if ((*dit)->name == name) {
             // task already removed, no need to remove it again
             return;
+        }
+    }
     this->task_rem_queue.push_back(*dit);
     LOG4CXX_DEBUG(logger, "Queued task for removal: " << name);
 }
@@ -154,11 +162,13 @@ void TaskManager::run(void)
 
 void TaskManager::run_once(void)
 {
+    TaskInfo *ti;
+    float time_start;
     std::vector<TaskInfo*>::iterator vit;
     for (vit = this->tasks.begin(); vit != this->tasks.end(); ++vit) {
-        TaskInfo *ti = *vit;
+        ti = *vit;
         this->task_info_pre_run_tick(*ti);
-        float time_start = kage::utils::gettimeofdayf();
+        time_start = kage::utils::gettimeofdayf();
         ti->task->run(*ti);
         this->task_info_post_run_tick(*ti, time_start);
     }
@@ -166,12 +176,12 @@ void TaskManager::run_once(void)
 
 inline void TaskManager::pre_run_once(void)
 {
+    this->add_queued_tasks();
 }
 
 inline void TaskManager::post_run_once(void)
 {
     this->rem_queued_tasks();
-    this->add_queued_tasks();
 }
 
 void TaskManager::rem_queued_tasks(void)
@@ -196,14 +206,13 @@ void TaskManager::add_queued_tasks(void)
         TaskInfo *ti = this->task_add_queue.front();
         this->tasks.push_back(ti);
         this->task_add_queue.pop_front();
-        LOG4CXX_DEBUG(logger, "Added task " << ti->name);
+        LOG4CXX_DEBUG(logger, "Added task " << ti->id << ":" << ti->name);
     }
 }
 
 TaskInfo& TaskManager::create_TaskInfo(std::string name, Task &task)
 {
     static unsigned int last_id = 0;
-
     TaskInfo *ti = new TaskInfo();
     ti->id = ++last_id;
     ti->name = name;
