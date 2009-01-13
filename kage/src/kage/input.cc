@@ -44,6 +44,11 @@ InputManager::~InputManager(void)
  * kage::core::input::CaptureInputTask
  */
 
+CaptureInputTask::CaptureInputTask(void)
+    : input_manager(NULL)
+{
+}
+
 CaptureInputTask::CaptureInputTask(InputManager &input_manager)
     : input_manager(&input_manager)
 {
@@ -53,11 +58,16 @@ CaptureInputTask::~CaptureInputTask(void)
 {
 }
 
-kage::core::sys::Task::Continuation CaptureInputTask::run(
+void CaptureInputTask::set_input_manager(InputManager &input_manager)
+{
+    this->input_manager = &input_manager;
+}
+
+kage::core::sys::Task::ExitCode CaptureInputTask::run(
         const kage::core::sys::TaskInfo &ti)
 {
     this->input_manager->capture();
-    return this->CONTINUE;
+    return this->TASK_CONTINUE;
 }
 
 

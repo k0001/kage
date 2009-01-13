@@ -84,9 +84,10 @@ class Application : public kage::core::sys::Application
         /* Ogre important stuff */
         Ogre::Root *root;
 
-        /* Input manager */
+        /* Input management */
         kage::core::input::InputManager *input_manager;
-        kage::core::input::CaptureInputTask *capture_input_task;
+        kage::core::input::CaptureInputTask capture_input_task;
+        std::size_t capture_input_task_id;
 };
 
 

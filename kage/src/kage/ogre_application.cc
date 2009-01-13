@@ -43,7 +43,6 @@ Application::Application(const std::string &name,
     , ogre_log_file_path(ogre_log_file_path)
     , root(NULL)
     , input_manager(NULL)
-    , capture_input_task(NULL)
 {
     // Setup configuration files paths
     if (this->conf_path.length())
@@ -221,10 +220,9 @@ bool Application::setup_input_manager(void)
         return false;
     this->input_manager = new kage::ois::input::BufferedInputManager(
             window_handler);
-    this->capture_input_task = new kage::core::input::CaptureInputTask(
-            *this->input_manager);
-    this->task_mgr.add_task("OIS Capture Input", *this->capture_input_task);
-
+    this->capture_input_task.set_input_manager(*this->input_manager);
+    this->capture_input_task_id = this->task_mgr.add_task(
+            this->capture_input_task, "OIS Capture Input");
     return true;
 }
 
@@ -298,7 +296,7 @@ bool Application::cleanup_input_manager(void)
     bool fail = false;
     if (this->input_manager) {
         try {
-            this->task_mgr.remove_task(*this->capture_input_task);
+            this->task_mgr.remove_task(this->capture_input_task_id);
         }
         catch ( ... ) {
             LOG4CXX_ERROR(logger, "Could not remove OIS Capture Input Task");
@@ -306,8 +304,6 @@ bool Application::cleanup_input_manager(void)
         }
         delete this->input_manager;
         this->input_manager = NULL;
-        delete this->capture_input_task;
-        this->capture_input_task = NULL;
     }
     return !fail;
 

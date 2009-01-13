@@ -58,10 +58,14 @@ class InputManager
 class CaptureInputTask : public kage::core::sys::Task
 {
     public:
+        CaptureInputTask(void);
         /* Creates a new CaptureInputTask who will capture input using ``input_manager`` */
         CaptureInputTask(InputManager &input_manager);
         ~CaptureInputTask(void);
-        kage::core::sys::Task::Continuation run(const kage::core::sys::TaskInfo &ti);
+
+        kage::core::sys::Task::ExitCode run(const kage::core::sys::TaskInfo &ti);
+
+        void set_input_manager(InputManager &input_manager);
 
     protected:
         /* The InputManager responsible for capturing input */
