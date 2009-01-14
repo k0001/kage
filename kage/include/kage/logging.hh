@@ -22,6 +22,21 @@
 #include <log4cxx/logger.h>
 #include <log4cxx/basicconfigurator.h>
 
+/*
+ * log4cxx macros wrappers.
+ *
+ * They log to a predefined log4cxx::LoggerPtr you should name 'logger'.
+ */
+
+#define LOG_DEBUG(message)              LOG4CXX_DEBUG(logger, message)
+#define LOG_TRACE(message)              LOG4CXX_TRACE(logger, message)
+#define LOG_INFO(message)               LOG4CXX_INFO(logger, message)
+#define LOG_WARN(message)               LOG4CXX_WARN(logger, message)
+#define LOG_ERROR(message)              LOG4CXX_ERROR(logger, message)
+#define LOG_FATAL(message)              LOG4CXX_FATAL(logger, message)
+#define LOG_ASSERT(condition, message)  LOG4CXX_ASSERT(logger, condition, message)
+
+
 namespace kage {
 namespace core {
 namespace logging {
