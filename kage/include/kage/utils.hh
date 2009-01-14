@@ -21,9 +21,12 @@
 
 #include "kage/globals.hh"
 
+
 namespace kage {
 namespace utils {
 
+static log4cxx::LoggerPtr logger(log4cxx::Logger::getLogger(
+        "kage.utils"));
 
 /*
  * kage::utils::gettimeofdayf
@@ -37,7 +40,7 @@ float gettimeofdayf(void)
     struct timezone tz;
     gettimeofday(&tv, &tz);
     return (static_cast<float>(tv.tv_sec) +
-            static_cast<float>(tv.tv_usec) / 1000000);
+            static_cast<float>(tv.tv_usec) / 1000000.0);
 }
 
 
