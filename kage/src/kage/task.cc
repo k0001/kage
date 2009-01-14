@@ -17,7 +17,6 @@
  */
 
 #include "kage/task.hh"
-#include "kage/utils.hh"
 
 static log4cxx::LoggerPtr logger(log4cxx::Logger::getLogger(
         "kage.core.sys.task"));
@@ -89,19 +88,26 @@ void TaskManager::remove_task(std::size_t id)
 
 void TaskManager::run(void)
 {
+    std::size_t num_frames = 0;
     bool more_tasks = true;
+    time_t started_at = time(NULL);
+
     while (more_tasks) {
         more_tasks = this->pre_run_once();
         this->run_once();
         this->post_run_once();
+        ++num_frames;
     }
+    LOG_INFO("TaskManager work done after "
+            << time(NULL) - started_at << " seconds and "
+            << num_frames << " frames.");
 }
 
 void TaskManager::run_once(void)
 {
     // O(ntasks)
     TaskInfo *ti;
-    float time_start;
+    time_t time_start;
     std::vector<TaskInfo*>::iterator vit;
     Task::ExitCode tec;
 
@@ -162,9 +168,8 @@ TaskInfo& TaskManager::create_TaskInfo(Task &task, const std::string &desc)
     ti->id = ++this->last_task_info_id;
     ti->task.reset(&task);
     ti->desc = desc;
-    ti->scheduled_since = kage::utils::gettimeofdayf();
-    ti->last_run = 0.0;
-    ti->active_time = 0.0;
+    ti->scheduled_since = time(NULL);
+    ti->active_time = 0;
     ti->frame = 0;
     return *ti;
 }
@@ -174,15 +179,14 @@ inline void TaskManager::destroy_TaskInfo(TaskInfo &ti)
     delete &ti;
 }
 
-inline float TaskManager::task_info_pre_run_tick(TaskInfo &ti)
+inline time_t TaskManager::task_info_pre_run_tick(TaskInfo &ti)
 {
-    return kage::utils::gettimeofdayf();
+    return time(NULL);
 }
 
-inline void TaskManager::task_info_post_run_tick(TaskInfo &ti, float time_start)
+inline void TaskManager::task_info_post_run_tick(TaskInfo &ti, time_t time_start)
 {
     ++ti.frame;
-    ti.last_run = time_start;
     ti.active_time += time_start;
 }
 

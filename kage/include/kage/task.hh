@@ -44,11 +44,9 @@ struct TaskInfo
     // The Task itself
     boost::shared_ptr<Task> task;
     // When did the Task was scheduled for excecution
-    float scheduled_since;
-    // When did the task started running for the last time
-    float last_run;
+    time_t scheduled_since;
     // How much time the Task has been actually active (i.e, not idle)
-    float active_time;
+    time_t active_time;
     // How many frames since the Task started running
     std::size_t frame;
 };
@@ -118,10 +116,10 @@ class TaskManager {
         void destroy_TaskInfo(TaskInfo &ti);
         /* Updates ``ti`` before running the associated task.
          * Returns a the currennt timestamp meaning "when the ``ti`` started running" */
-        float task_info_pre_run_tick(TaskInfo &ti);
+        time_t task_info_pre_run_tick(TaskInfo &ti);
         /* Updates ``ti`` after running the associated task.
          * ``time_start`` tells the "time when ``ti`` started running" as returned by task_info_pre_run_tick(ti) */
-        void task_info_post_run_tick(TaskInfo &ti, float time_start);
+        void task_info_post_run_tick(TaskInfo &ti, time_t time_start);
 
         /* Tasks ids queued for removal */
         std::deque<std::size_t> task_rem_queue;

@@ -26,10 +26,7 @@
 #include <map>
 #include <stack>
 #include <string>
-
-// sys
-#include <unistd.h>
-#include <sys/time.h>
+#include <ctime>
 
 // third party
 #include <boost/shared_ptr.hpp>
