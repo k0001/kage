@@ -67,7 +67,7 @@ std::size_t TaskManager::add_task(Task &task, const std::string &desc)
     // O(1)
     TaskInfo *ti = &this->create_TaskInfo(task, desc);
     this->task_add_queue.push_back(ti);
-    LOG4CXX_DEBUG(logger, "Queued task for addition: " << ti->id);
+    LOG_DEBUG("Queued task for addition: " << ti->id);
     return ti->id;
 }
 
@@ -79,11 +79,11 @@ void TaskManager::remove_task(std::size_t id)
     std::deque<std::size_t>::iterator dit;
     for (dit = this->task_rem_queue.begin(); dit != this->task_rem_queue.end(); ++dit)
         if (*dit == id) {
-            LOG4CXX_DEBUG(logger, "Task " << id << " already queued for removal, ignoring");
+            LOG_DEBUG("Task " << id << " already queued for removal, ignoring");
             return;
         }
     this->task_rem_queue.push_back(id);
-    LOG4CXX_DEBUG(logger, "Queued task for removal: " << id);
+    LOG_DEBUG("Queued task for removal: " << id);
 }
 
 void TaskManager::run(void)
@@ -132,7 +132,7 @@ void TaskManager::rem_queued_tasks(void)
             continue;
         this->tasks.erase(it);
         this->task_rem_queue.pop_front();
-        LOG4CXX_DEBUG(logger, "Removed task: " << id);
+        LOG_DEBUG("Removed task: " << id);
         this->destroy_TaskInfo(**it);
     }
 }
@@ -145,7 +145,7 @@ void TaskManager::add_queued_tasks(void)
         ti = this->task_add_queue.front();
         this->tasks.push_back(ti);
         this->task_add_queue.pop_front();
-        LOG4CXX_DEBUG(logger, "Added task: " << ti->id);
+        LOG_DEBUG("Added task: " << ti->id);
     }
 }
 
