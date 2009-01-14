@@ -37,6 +37,7 @@ Task::Task(void)
 
 Task::~Task(void)
 {
+    LOG4CXX_DEBUG(logger, "Task at (" << this << ") deleted");
 }
 
 
@@ -88,8 +89,9 @@ void TaskManager::remove_task(std::size_t id)
 
 void TaskManager::run(void)
 {
-    while (true) {
-        this->pre_run_once();
+    bool more_tasks = true;
+    while (more_tasks) {
+        more_tasks = this->pre_run_once();
         this->run_once();
         this->post_run_once();
     }
@@ -108,12 +110,15 @@ void TaskManager::run_once(void)
         time_start = this->task_info_pre_run_tick(*ti);
         tec = ti->task->run(*ti);
         this->task_info_post_run_tick(*ti, time_start);
+        if (tec == Task::TASK_DONE)
+            this->remove_task(ti->id);
     }
 }
 
-inline void TaskManager::pre_run_once(void)
+inline bool TaskManager::pre_run_once(void)
 {
     this->add_queued_tasks();
+    return !this->tasks.empty();
 }
 
 inline void TaskManager::post_run_once(void)
@@ -128,12 +133,13 @@ void TaskManager::rem_queued_tasks(void)
     std::vector<TaskInfo*>::iterator it;
     while (!this->task_rem_queue.empty()) {
         id = this->task_rem_queue.front();
-        for (it = this->tasks.begin(); (*it)->id != id ; ++it)
+        for (it = this->tasks.begin(); ; ++it)
+            // XXX BUG HERE
             continue;
         this->tasks.erase(it);
+        this->destroy_TaskInfo(**it);
         this->task_rem_queue.pop_front();
         LOG4CXX_DEBUG(logger, "Removed task: " << id);
-        this->destroy_TaskInfo(**it);
     }
 }
 
@@ -153,8 +159,8 @@ TaskInfo& TaskManager::create_TaskInfo(Task &task, const std::string &desc)
 {
     TaskInfo *ti = new TaskInfo();
     ti->id = ++this->last_task_info_id;
+    ti->task.reset(&task);
     ti->desc = desc;
-    ti->task = &task;
     ti->scheduled_since = kage::utils::gettimeofdayf();
     ti->last_run = 0.0;
     ti->active_time = 0.0;

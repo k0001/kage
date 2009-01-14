@@ -42,7 +42,7 @@ struct TaskInfo
     // Task name
     std::string desc;
     // The Task itself
-    Task *task;
+    boost::shared_ptr<Task> task;
     // When did the Task was scheduled for excecution
     float scheduled_since;
     // When did the task started running for the last time
@@ -99,11 +99,12 @@ class TaskManager {
         void run(void);
 
     protected:
-        /* Called on each iteration of run(), responsible for running all tasks */
+        /* Called on each iteration of run(), responsible for running all tasks. */
         void run_once(void);
 
-        /* Pre and Post hooks for run_once */
-        void pre_run_once(void);
+        /* Pre run_once hook. Returns true if there are still tasks to be executed on a next iteration */
+        bool pre_run_once(void);
+        /* Post run_once hook */
         void post_run_once(void);
 
         /* Removal of queued Tasks, called on current run iteration's post_run_once() -- before addition of queued tasks */

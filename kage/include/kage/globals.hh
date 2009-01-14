@@ -32,6 +32,7 @@
 #include <sys/time.h>
 
 // third party
+#include <boost/shared_ptr.hpp>
 #include <Ogre.h>
 #include <OIS/OIS.h>
 #include "kage/logging.hh"
