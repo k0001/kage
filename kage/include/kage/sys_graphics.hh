@@ -16,50 +16,37 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef APPLICATION_HH_
-#define APPLICATION_HH_
+#ifndef KAGE_SYS_GRAPHICS_HH_
+#define KAGE_SYS_GRAPHICS_HH_
 
-#include "kage/globals.hh"
-#include "kage/fsm.hh"
-#include "kage/task.hh"
+#include "kage/system.hh"
 
 namespace kage {
 namespace core {
-namespace sys {
+namespace graphics {
 
 
 /*
- * kage::core::sys::Application
+ * kage::core::graphics::GraphicSystem
  *
- * Controls the workflow of an application.
+ * Interface for Graphic Systems that are part of a kage::core::sys::Application
  */
 
-class Application
+class GraphicSystem : public kage::core::sys::System
 {
     public:
-        Application(const std::string &name="Kage Application")
-            : name(name) { }
-        virtual ~Application(void);
+        virtual ~GraphicSystem(void) = 0;
 
-        /* Starts the Application workflow */
-        virtual void run(void);
-
-        std::string get_name(void) const { return this->name; }
-
-    protected:
-        /* Application name */
-        std::string name;
-
-        /* Task Manager */
-        TaskManager task_mgr;
-
-        /* Game Screens FSM */
-        FiniteStateMachine game_screens;
+        /* Setup GraphicSystem. Returns true on succes */
+        virtual bool setup(kage::core::sys::Application &app) = 0;
 };
 
 
-} // namespace sys
+} // namespace graphics
 } // namespace core
 } // namespace kage
 
-#endif // APPLICATION_HH_
+
+#endif // KAGE_SYS_GRAPHICS_HH_
+
+
