@@ -37,7 +37,7 @@ Task::Task(void)
 
 Task::~Task(void)
 {
-    LOG4CXX_DEBUG(logger, "Task at (" << this << ") deleted");
+    LOG4CXX_DEBUG(logger, "Task at [" << this << "] deleted");
 }
 
 
@@ -68,7 +68,7 @@ std::size_t TaskManager::add_task(Task &task, const std::string &desc)
     // O(1)
     TaskInfo *ti = &this->create_TaskInfo(task, desc);
     this->task_add_queue.push_back(ti);
-    LOG_DEBUG("Queued task for addition: " << ti->id);
+    LOG_DEBUG("Task id " << ti->id << " queued for addition");
     return ti->id;
 }
 
@@ -80,11 +80,11 @@ void TaskManager::remove_task(std::size_t id)
     std::deque<std::size_t>::iterator dit;
     for (dit = this->task_rem_queue.begin(); dit != this->task_rem_queue.end(); ++dit)
         if (*dit == id) {
-            LOG_DEBUG("Task " << id << " already queued for removal, ignoring");
+            LOG_DEBUG("Task id " << id << " already queued for removal, skipping");
             return;
         }
     this->task_rem_queue.push_back(id);
-    LOG_DEBUG("Queued task for removal: " << id);
+    LOG_DEBUG("Queued Task id " << id << " for removal");
 }
 
 void TaskManager::run(void)
@@ -110,8 +110,10 @@ void TaskManager::run_once(void)
         time_start = this->task_info_pre_run_tick(*ti);
         tec = ti->task->run(*ti);
         this->task_info_post_run_tick(*ti, time_start);
-        if (tec == Task::TASK_DONE)
+        if (tec == Task::TASK_DONE) {
+            LOG_DEBUG("Task id " << ti->id << " done");
             this->remove_task(ti->id);
+        }
     }
 }
 
@@ -133,13 +135,12 @@ void TaskManager::rem_queued_tasks(void)
     std::vector<TaskInfo*>::iterator it;
     while (!this->task_rem_queue.empty()) {
         id = this->task_rem_queue.front();
-        for (it = this->tasks.begin(); ; ++it)
-            // XXX BUG HERE
-            continue;
-        this->tasks.erase(it);
-        this->destroy_TaskInfo(**it);
         this->task_rem_queue.pop_front();
-        LOG_DEBUG("Removed task: " << id);
+        for (it = this->tasks.begin(); (*it)->id != id; ++it)
+            continue;
+        this->destroy_TaskInfo(**it);
+        this->tasks.erase(it);
+        LOG_DEBUG("Removed Task id: " << id);
     }
 }
 
@@ -151,7 +152,7 @@ void TaskManager::add_queued_tasks(void)
         ti = this->task_add_queue.front();
         this->tasks.push_back(ti);
         this->task_add_queue.pop_front();
-        LOG_DEBUG("Added task: " << ti->id);
+        LOG_DEBUG("Added Task id: " << ti->id);
     }
 }
 
