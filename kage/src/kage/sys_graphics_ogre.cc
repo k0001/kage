@@ -57,6 +57,11 @@ OgreGraphicSystem::OgreGraphicSystem(const std::string &conf_path,
     else
         this->resources_cfg = this->conf_path + resources_cfg;
 
+    LOG_INFO("Using Ogre config from: " << this->ogre_cfg);
+    LOG_INFO("Using Ogre plugins config from: " << this->plugins_cfg);
+    LOG_INFO("Using Ogre resources config from: " << this->resources_cfg);
+    LOG_INFO("Ogre output log file: " << this->ogre_log_file_path);
+
     // TODO: stat() file paths to check existence/permissions
 }
 
