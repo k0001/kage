@@ -32,7 +32,7 @@ OgreGraphicSystem::OgreGraphicSystem(const std::string &conf_path,
                                      const std::string &plugins_cfg,
                                      const std::string &ogre_cfg,
                                      const std::string &resources_cfg,
-                                     const std::string &log_file_path)
+                                     const std::string &ogre_log_file_path)
     : conf_path(conf_path)
     , ogre_log_file_path(ogre_log_file_path)
     , root(NULL)

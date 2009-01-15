@@ -41,7 +41,7 @@ class OgreGraphicSystem : public kage::core::graphics::GraphicSystem
                           const std::string &plugins_cfg="plugins.cfg",
                           const std::string &ogre_cfg="ogre.cfg",
                           const std::string &resources_cfg="resources.cfg",
-                          const std::string &log_file_path="ogre.log");
+                          const std::string &ogre_log_file_path="ogre.log");
         ~OgreGraphicSystem(void);
 
         /* Setup Ogre Graphic System. Returns true on succes */
