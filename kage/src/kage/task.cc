@@ -92,6 +92,7 @@ void TaskManager::run(void)
     bool more_tasks = true;
     time_t started_at = time(NULL);
 
+    LOG_INFO("TaskManager started working");
     while (more_tasks) {
         more_tasks = this->pre_run_once();
         this->run_once();

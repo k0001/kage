@@ -32,20 +32,25 @@ namespace sys {
 
 Application::Application(const std::string &name)
     : name(name)
-{
-}
-
-Application::~Application()
+    , sys_graphic(NULL)
 {
 }
 
 void Application::run(void)
 {
-    LOG_INFO("Application's Task manager started running");
     this->task_mgr.run();
-
 }
 
+bool Application::set_graphic_system(kage::core::graphics::GraphicSystem &sys)
+{
+    if (!sys.setup(*this)) {
+        LOG_INFO("Graphic System setup failed");
+        return false;
+    }
+    this->sys_graphic = &sys;
+    LOG_INFO("Graphic System initialized");
+    return true;
+}
 
 } // namespace sys
 } // namespace core

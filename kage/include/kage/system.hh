@@ -19,11 +19,12 @@
 #ifndef KAGE_SYSTEM_HH_
 #define KAGE_SYSTEM_HH_
 
-#include "kage/application.hh"
 
 namespace kage {
 namespace core {
 namespace sys {
+
+class Application;
 
 /*
  * kage::core::sys::System
@@ -34,10 +35,13 @@ namespace sys {
 class System
 {
     public:
-        virtual ~System(void) = 0;
+        virtual ~System(void) { }
 
         /* Setup System. Returns true on succes */
-        virtual bool setup(kage::core::sys::Application &app) = 0;
+        virtual bool setup(Application &app) = 0;
+
+        /* Update system status. Called once per frame. Returns true on succes */
+        virtual bool update(void) = 0;
 };
 
 

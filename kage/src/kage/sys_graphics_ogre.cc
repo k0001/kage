@@ -17,6 +17,7 @@
  */
 
 #include "kage/sys_graphics_ogre.hh"
+#include "kage/application.hh"
 
 static log4cxx::LoggerPtr logger(log4cxx::Logger::getLogger(
         "kage.ogre.graphics.system"));
@@ -110,6 +111,14 @@ bool OgreGraphicSystem::setup(kage::core::sys::Application &app)
     }
 
     this->app = &app;
+    return true;
+}
+
+bool OgreGraphicSystem::update(void)
+{
+    if (!this->root->renderOneFrame())
+        return false;
+    Ogre::WindowEventUtilities::messagePump();
     return true;
 }
 

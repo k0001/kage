@@ -20,6 +20,7 @@
 #define KAGE_SYS_GRAPHICS_OGRE_HH_
 
 #include "kage/sys_graphics.hh"
+#include "kage/globals.hh"
 
 
 namespace kage {
@@ -37,14 +38,17 @@ class OgreGraphicSystem : public kage::core::graphics::GraphicSystem
 {
     public:
         OgreGraphicSystem(const std::string &conf_path="",
-                           const std::string &plugins_cfg="plugins.cfg",
-                           const std::string &ogre_cfg="ogre.cfg",
-                           const std::string &resources_cfg="resources.cfg",
-                           const std::string &log_file_path="ogre.log");
+                          const std::string &plugins_cfg="plugins.cfg",
+                          const std::string &ogre_cfg="ogre.cfg",
+                          const std::string &resources_cfg="resources.cfg",
+                          const std::string &log_file_path="ogre.log");
         ~OgreGraphicSystem(void);
 
-        /* Setup Ogre Graphics System. Returns true on succes */
+        /* Setup Ogre Graphic System. Returns true on succes */
         bool setup(kage::core::sys::Application &app);
+
+        /* Update Ogre Graphic System status. Called once per frame. Returns true on success */
+        bool update(void);
 
     protected:
         /* Setup subroutines. Return true on success. */

@@ -20,13 +20,15 @@
 #define KAGE_HH_
 
 #include "kage/application.hh"
+#include "kage/fsm.hh"
 #include "kage/globals.hh"
 #include "kage/input.hh"
 #include "kage/input_buffered.hh"
-#include "kage/kage.hh"
-#include "kage/ogre_application.hh"
+#include "kage/logging.hh"
 #include "kage/ois_input_buffered.hh"
-#include "kage/fsm.hh"
+#include "kage/sys_graphics.hh"
+#include "kage/sys_graphics_ogre.hh"
+#include "kage/system.hh"
 #include "kage/task.hh"
 
 #endif // APPLICATION_HH_

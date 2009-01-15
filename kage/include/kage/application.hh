@@ -22,6 +22,7 @@
 #include "kage/globals.hh"
 #include "kage/fsm.hh"
 #include "kage/task.hh"
+#include "kage/sys_graphics.hh"
 
 namespace kage {
 namespace core {
@@ -37,24 +38,23 @@ namespace sys {
 class Application
 {
     public:
-        Application(const std::string &name="Kage Application")
-            : name(name) { }
-        virtual ~Application(void);
-
+        Application(const std::string &name="Kage Application");
+        virtual ~Application(void) { }
         /* Starts the Application workflow */
         virtual void run(void);
+        /* Systems setup*/
+        bool set_graphic_system(kage::core::graphics::GraphicSystem &sys);
 
         std::string get_name(void) const { return this->name; }
-
     protected:
         /* Application name */
         std::string name;
-
         /* Task Manager */
         TaskManager task_mgr;
-
         /* Game Screens FSM */
         FiniteStateMachine game_screens;
+        /* Systems placeholders */
+        kage::core::graphics::GraphicSystem *sys_graphic;
 };
 
 

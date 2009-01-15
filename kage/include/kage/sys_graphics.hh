@@ -34,11 +34,6 @@ namespace graphics {
 
 class GraphicSystem : public kage::core::sys::System
 {
-    public:
-        virtual ~GraphicSystem(void) = 0;
-
-        /* Setup GraphicSystem. Returns true on succes */
-        virtual bool setup(kage::core::sys::Application &app) = 0;
 };
 
 
