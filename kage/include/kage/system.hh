@@ -19,6 +19,7 @@
 #ifndef KAGE_SYSTEM_HH_
 #define KAGE_SYSTEM_HH_
 
+#include "kage/globals.hh"
 
 namespace kage {
 namespace core {
