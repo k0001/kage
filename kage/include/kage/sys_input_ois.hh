@@ -39,6 +39,14 @@ class OISBufferedInputHandler : public kage::core::input::BufferedInputHandler
         OISBufferedInputHandler(void) { }
         virtual ~OISBufferedInputHandler(void) { }
 
+        /* Setup System. Returns true on succes */
+        virtual bool setup(kage::core::sys::Application &app)
+                { return true; }
+
+        /* Called after all Systems for an Application have been setup.
+         * Attaches OIS input_manager to the window handle provided by this->app's sys_graphic */
+        virtual bool after_setup(void);
+
         /* kage::core::input::BufferedInputHandler keyboard interface */
         bool key_pressed(const OIS::KeyEvent &arg)
                 { return true; }
@@ -80,13 +88,16 @@ class OISBufferedInputHandler : public kage::core::input::BufferedInputHandler
 class OISBufferedInputSystem : public kage::core::input::BufferedInputSystem
 {
     public:
-        OISBufferedInputSystem(std::size_t window_handle,
-                               bool enable_keyboard=true,
+        OISBufferedInputSystem(bool enable_keyboard=true,
                                bool enable_mouse=true);
         ~OISBufferedInputSystem(void);
 
         /* Setup System. Returns true on success */
         bool setup(kage::core::sys::Application &app);
+
+        /* Called after all Systems for an Application have been setup.
+         * Attaches OIS input_manager to the window handle provided by this->app's sys_graphic */
+        virtual bool after_setup(void);
 
         /* Set input handlers, return true on success */
         bool set_keyboard_input_handler(kage::core::input::BufferedInputHandler &handler);
@@ -114,6 +125,9 @@ class OISBufferedInputSystem : public kage::core::input::BufferedInputSystem
         /* Devices enabled? */
         bool keyboard_enabled;
         bool mouse_enabled;
+
+        /* Application this system is attached to */
+        kage::core::sys::Application *app;
 };
 
 

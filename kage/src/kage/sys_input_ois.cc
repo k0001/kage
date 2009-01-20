@@ -17,6 +17,7 @@
  */
 
 #include "kage/sys_input_ois.hh"
+#include "kage/application.hh"
 
 static log4cxx::LoggerPtr logger(log4cxx::Logger::getLogger(
         "kage.ois.input"));
@@ -30,8 +31,7 @@ namespace input {
  * kage::ois::input::OISBufferedInputSystem
  */
 
-OISBufferedInputSystem::OISBufferedInputSystem(std::size_t window_handle,
-                                               bool enable_keyboard,
+OISBufferedInputSystem::OISBufferedInputSystem(bool enable_keyboard,
                                                bool enable_mouse)
     : ois_input_manager(NULL)
     , ois_keyboard(NULL)
@@ -40,8 +40,8 @@ OISBufferedInputSystem::OISBufferedInputSystem(std::size_t window_handle,
     , mouse_handler(NULL)
     , keyboard_enabled(enable_keyboard)
     , mouse_enabled(enable_mouse)
+    , app(NULL)
 {
-    this->ois_input_manager = OIS::InputManager::createInputSystem(window_handle);
 }
 
 OISBufferedInputSystem::~OISBufferedInputSystem(void)
@@ -60,6 +60,14 @@ OISBufferedInputSystem::~OISBufferedInputSystem(void)
 
 bool OISBufferedInputSystem::setup(kage::core::sys::Application &app)
 {
+    this->app = &app;
+    return true;
+}
+
+bool OISBufferedInputSystem::after_setup(void)
+{
+    std::size_t window_handle = this->app->sys_graphic->get_window_handle();
+    this->ois_input_manager = OIS::InputManager::createInputSystem(window_handle);
     if (this->keyboard_enabled)
         if (!this->setup_keyboard())
             return false;

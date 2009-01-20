@@ -20,6 +20,7 @@
 #define KAGE_SYSTEM_HH_
 
 #include "kage/globals.hh"
+#include "kage/task.hh"
 
 namespace kage {
 namespace core {
@@ -41,8 +42,30 @@ class System
         /* Setup System. Returns true on succes */
         virtual bool setup(Application &app) = 0;
 
-        /* Update system status. Called once per frame. Returns true on succes */
+        /* Called after all Systems for an Application have been setup. Returns true if is ok to
+         * proceed qwith Application execution */
+        virtual bool after_setup(void)
+                { return true; }
+
+        /* Update system status. Called once per frame. Returns true on success */
         virtual bool update(void) = 0;
+};
+
+
+class SystemsUpdateTask : public Task
+{
+    public:
+        ~SystemsUpdateTask(void) { }
+
+        /* Actual Task code, dispatch calls to every system's update method */
+        Task::ExitCode run(const TaskInfo &ti);
+
+        /* Register a system for updating */
+        void register_system(System &sys);
+
+    protected:
+        /* Systems registered with this Task */
+        std::vector<System*> systems;
 };
 
 

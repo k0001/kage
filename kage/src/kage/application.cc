@@ -33,6 +33,7 @@ namespace sys {
 Application::Application(const std::string &name)
     : name(name)
     , sys_graphic(NULL)
+    , sys_input(NULL)
 {
 }
 
@@ -60,6 +61,25 @@ bool Application::set_input_system(kage::core::input::InputSystem &sys)
     }
     this->sys_input = &sys;
     LOG_INFO("Input System initialized");
+    return true;
+}
+
+bool Application::prepare_systems(void)
+{
+    if (this->sys_graphic) {
+        if (!this->sys_graphic->after_setup()) {
+            LOG_ERROR("Graphic System after_setup failed");
+            return false;
+        }
+        this->systems_update_task.register_system(*this->sys_graphic);
+    }
+    if (this->sys_input) {
+        if (!this->sys_input->after_setup()) {
+            LOG_ERROR("Input System after_setup failed");
+            return false;
+        }
+        this->systems_update_task.register_system(*this->sys_input);
+    }
     return true;
 }
 

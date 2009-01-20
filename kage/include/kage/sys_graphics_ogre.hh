@@ -47,8 +47,13 @@ class OgreGraphicSystem : public kage::core::graphics::GraphicSystem
         /* Setup Ogre Graphic System. Returns true on succes */
         bool setup(kage::core::sys::Application &app);
 
+        bool after_setup(void) { }
+
         /* Update Ogre Graphic System status. Called once per frame. Returns true on success */
         bool update(void);
+
+        /* Returns the window handle for the RenderWindow being used */
+        std::size_t get_window_handle(void);
 
     protected:
         /* Setup subroutines. Return true on success. */

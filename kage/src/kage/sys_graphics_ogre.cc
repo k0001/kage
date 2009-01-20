@@ -127,6 +127,16 @@ bool OgreGraphicSystem::update(void)
     return true;
 }
 
+std::size_t OgreGraphicSystem::get_window_handle(void)
+{
+    if (!this->root)
+        throw "Ogre not initialized bla bla real exception";
+    std::size_t win_hnd = 0;
+    Ogre::RenderWindow *win = this->root->getAutoCreatedWindow();
+    win->getCustomAttribute("WINDOW", &win_hnd);
+    return win_hnd;
+}
+
 bool OgreGraphicSystem::setup_root(void)
 {
     if (this->root)

@@ -34,6 +34,9 @@ namespace graphics {
 
 class GraphicSystem : public kage::core::sys::System
 {
+    public:
+        /* Returns the window handle for the render window being used */
+        std::size_t get_window_handle(void);
 };
 
 

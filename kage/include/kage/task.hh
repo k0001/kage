@@ -75,7 +75,6 @@ class Task {
 };
 
 
-
 /*
  * kage::core::sys::TaskManager
  *
