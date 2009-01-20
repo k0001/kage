@@ -11,8 +11,6 @@ DEFINES = -DDEBUG
 OBJS = build/kage/fsm.o \
        build/kage/task.o \
        build/kage/application.o \
-       build/kage/input.o \
-       build/kage/input_buffered.o \
        build/kage/system.o \
        build/kage/sys_graphics_ogre.o \
        build/kage/sys_input_ois.o \

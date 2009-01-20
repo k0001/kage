@@ -31,14 +31,17 @@ namespace sys {
  */
 
 Application::Application(const std::string &name)
-    : name(name)
-    , sys_graphic(NULL)
+    : sys_graphic(NULL)
     , sys_input(NULL)
+    , name(name)
 {
 }
 
 void Application::run(void)
 {
+    if (!this->prepare_systems()) {
+        throw "Couldn't prepare Systems for execution";
+    }
     this->task_mgr.run();
 }
 
@@ -80,6 +83,8 @@ bool Application::prepare_systems(void)
         }
         this->systems_update_task.register_system(*this->sys_input);
     }
+    LOG_INFO("Systems ready");
+    this->task_mgr.add_task(this->systems_update_task, "Systems Update Task");
     return true;
 }
 
