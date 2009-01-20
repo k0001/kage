@@ -44,13 +44,25 @@ void Application::run(void)
 bool Application::set_graphic_system(kage::core::graphics::GraphicSystem &sys)
 {
     if (!sys.setup(*this)) {
-        LOG_INFO("Graphic System setup failed");
+        LOG_ERROR("Graphic System setup failed");
         return false;
     }
     this->sys_graphic = &sys;
     LOG_INFO("Graphic System initialized");
     return true;
 }
+
+bool Application::set_input_system(kage::core::input::InputSystem &sys)
+{
+    if (!sys.setup(*this)) {
+        LOG_ERROR("Input System setup failed");
+        return false;
+    }
+    this->sys_input = &sys;
+    LOG_INFO("Input System initialized");
+    return true;
+}
+
 
 } // namespace sys
 } // namespace core

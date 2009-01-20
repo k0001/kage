@@ -23,6 +23,7 @@
 #include "kage/fsm.hh"
 #include "kage/task.hh"
 #include "kage/sys_graphics.hh"
+#include "kage/sys_input.hh"
 
 namespace kage {
 namespace core {
@@ -44,6 +45,7 @@ class Application
         virtual void run(void);
         /* Systems setup*/
         bool set_graphic_system(kage::core::graphics::GraphicSystem &sys);
+        bool set_input_system(kage::core::input::InputSystem &sys);
 
         std::string get_name(void) const { return this->name; }
     protected:
@@ -55,6 +57,7 @@ class Application
         FiniteStateMachine game_screens;
         /* Systems placeholders */
         kage::core::graphics::GraphicSystem *sys_graphic;
+        kage::core::input::InputSystem *sys_input;
 };
 
 
