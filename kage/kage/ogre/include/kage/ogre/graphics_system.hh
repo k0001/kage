@@ -16,11 +16,11 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KAGE_SYS_GRAPHICS_OGRE_HH_
-#define KAGE_SYS_GRAPHICS_OGRE_HH_
+#ifndef KAGE_OGRE_GRAPHICS_SYSTEM_HH_
+#define KAGE_OGRE_GRAPHICS_SYSTEM_HH_
 
-#include "kage/sys_graphics.hh"
-#include "kage/globals.hh"
+#include "kage/core/graphics_system.hh"
+#include <Ogre.h>
 
 
 namespace kage {
@@ -94,5 +94,5 @@ class OgreGraphicSystem : public kage::core::graphics::GraphicSystem
 } // namespace kage
 
 
-#endif // KAGE_SYS_GRAPHICS_OGRE__
+#endif // KAGE_OGRE_GRAPHICS_SYSTEM_HH_
 

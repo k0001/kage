@@ -16,10 +16,10 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KAGE_SYS_INPUT_OIS_HH_
-#define KAGE_SYS_INPUT_OIS_HH_
+#ifndef KAGE_OIS_INPUT_SYSTEM_HH_
+#define KAGE_OIS_INPUT_SYSTEM_HH_
 
-#include "kage/sys_input.hh"
+#include "kage/core/input_system.hh"
 
 namespace kage {
 namespace ois {
@@ -137,7 +137,5 @@ class OISBufferedInputSystem : public kage::core::input::BufferedInputSystem
 } // namespace kage
 
 
-#endif // KAGE_SYS_INPUT_OIS_HH_
-
-
+#endif // KAGE_OIS_INPUT_SYSTEM_HH_
 

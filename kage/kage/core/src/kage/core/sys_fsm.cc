@@ -16,7 +16,7 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "kage/fsm.hh"
+#include "kage/core/sys_fsm.hh"
 
 namespace kage {
 namespace core {

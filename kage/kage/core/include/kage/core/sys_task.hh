@@ -16,10 +16,10 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TASK_HH_
-#define TASK_HH_
+#ifndef KAGE_CORE_SYS_TASK_HH_
+#define KAGE_CORE_SYS_TASK_HH_
 
-#include "kage/globals.hh"
+#include "kage/core/globals.hh"
 
 namespace kage {
 namespace core {
@@ -137,5 +137,5 @@ class TaskManager {
 } // namespace core
 } // namespace kage
 
-#endif // TASK_HH_
+#endif // KAGE_CORE_SYS_TASK_HH_
 

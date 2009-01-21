@@ -16,35 +16,20 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KAGE_SYS_GRAPHICS_HH_
-#define KAGE_SYS_GRAPHICS_HH_
-
-#include "kage/system.hh"
+#include "kage/core/utils_logging.hh"
 
 namespace kage {
 namespace core {
-namespace graphics {
+namespace logging {
 
 
-/*
- * kage::core::graphics::GraphicSystem
- *
- * Interface for Graphic Systems that are part of a kage::core::sys::Application
- */
-
-class GraphicSystem : public kage::core::sys::System
+void setup_logging(void)
 {
-    public:
-        /* Returns the window handle for the render window being used */
-        virtual std::size_t get_window_handle(void) = 0;
-};
+    log4cxx::BasicConfigurator::configure();
+}
 
 
-} // namespace graphics
+} // namespace logging
 } // namespace core
 } // namespace kage
-
-
-#endif // KAGE_SYS_GRAPHICS_HH_
-
 

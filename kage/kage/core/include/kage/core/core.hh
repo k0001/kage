@@ -16,18 +16,16 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KAGE_HH_
-#define KAGE_HH_
+#ifndef KAGE_CORE_HH_
+#define KAGE_CORE_HH_
 
-#include "kage/application.hh"
-#include "kage/fsm.hh"
-#include "kage/globals.hh"
-#include "kage/logging.hh"
-#include "kage/system.hh"
-#include "kage/sys_graphics.hh"
-#include "kage/sys_graphics_ogre.hh"
-#include "kage/sys_input.hh"
-#include "kage/sys_input_ois.hh"
-#include "kage/task.hh"
+#include "kage/core/globals.hh"
+#include "kage/core/sys_application.hh"
+#include "kage/core/sys_fsm.hh"
+#include "kage/core/sys_task.hh"
+#include "kage/core/sys_system.hh"
+#include "kage/core/utils_logging.hh"
+#include "kage/core/graphics_system.hh"
+#include "kage/core/input_system.hh"
 
-#endif // APPLICATION_HH_
+#endif // KAGE_CORE_HH_

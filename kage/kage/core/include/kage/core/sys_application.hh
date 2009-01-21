@@ -16,14 +16,14 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef APPLICATION_HH_
-#define APPLICATION_HH_
+#ifndef KAGE_CORE_SYS_APPLICATION_HH_
+#define KAGE_CORE_SYS_APPLICATION_HH_
 
-#include "kage/globals.hh"
-#include "kage/fsm.hh"
-#include "kage/task.hh"
-#include "kage/sys_graphics.hh"
-#include "kage/sys_input.hh"
+#include "kage/core/globals.hh"
+#include "kage/core/sys_fsm.hh"
+#include "kage/core/sys_task.hh"
+#include "kage/core/graphics_system.hh"
+#include "kage/core/input_system.hh"
 
 namespace kage {
 namespace core {
@@ -74,4 +74,4 @@ class Application
 } // namespace core
 } // namespace kage
 
-#endif // APPLICATION_HH_
+#endif // KAGE_CORE_SYS_APPLICATION_HH_

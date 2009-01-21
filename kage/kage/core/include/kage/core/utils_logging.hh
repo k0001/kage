@@ -16,8 +16,8 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef LOGGING_HH_
-#define LOGGING_HH_
+#ifndef KAGE_CORE_UTILS_LOGGING_HH_
+#define KAGE_CORE_UTILS_LOGGING_HH_
 
 #include <log4cxx/logger.h>
 #include <log4cxx/basicconfigurator.h>
@@ -51,4 +51,4 @@ void setup_logging(void);
 } // namespace kage
 
 
-#endif // LOGGING_HH_
+#endif // KAGE_CORE_UTILS_LOGGING_HH_

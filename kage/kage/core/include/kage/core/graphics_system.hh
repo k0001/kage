@@ -16,22 +16,34 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef GLOBALS_HH_
-#define GLOBALS_HH_
+#ifndef KAGE_CORE_GRAPHICS_SYSTEM_HH_
+#define KAGE_CORE_GRAPHICS_SYSTEM_HH_
 
-// stdlib
-#include <cstdlib>
-#include <deque>
-#include <iostream>
-#include <map>
-#include <stack>
-#include <string>
-#include <ctime>
+#include "kage/core/sys_system.hh"
 
-// third party
-#include <boost/shared_ptr.hpp>
-#include <Ogre.h>
-#include <OIS/OIS.h>
-#include "kage/logging.hh"
+namespace kage {
+namespace core {
+namespace graphics {
 
-#endif // GLOBALS_HH_
+
+/*
+ * kage::core::graphics::GraphicSystem
+ *
+ * Interface for Graphic Systems that are part of a kage::core::sys::Application
+ */
+
+class GraphicSystem : public kage::core::sys::System
+{
+    public:
+        /* Returns the window handle for the render window being used */
+        virtual std::size_t get_window_handle(void) = 0;
+};
+
+
+} // namespace graphics
+} // namespace core
+} // namespace kage
+
+
+#endif // KAGE_CORE_GRAPHICS_SYSTEM_HH_
+

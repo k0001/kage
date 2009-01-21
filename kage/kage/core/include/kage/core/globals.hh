@@ -16,36 +16,21 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "kage/system.hh"
+#ifndef KAGE_CORE_GLOBALS_HH_
+#define KAGE_CORE_GLOBALS_HH_
 
-static log4cxx::LoggerPtr logger(log4cxx::Logger::getLogger(
-        "kage.core.sys.system"));
+// stdlib
+#include <cstdlib>
+#include <deque>
+#include <iostream>
+#include <map>
+#include <stack>
+#include <string>
+#include <ctime>
 
-namespace kage {
-namespace core {
-namespace sys {
+// third party
+#include <boost/shared_ptr.hpp>
 
+#include "kage/core/utils_logging.hh"
 
-Task::ExitCode SystemsUpdateTask::run(const TaskInfo &ti)
-{
-    std::vector<System*>::iterator it;
-    for (it=this->systems.begin(); it != this->systems.end(); ++it) {
-        if (!(*it)->update()) {
-            LOG_ERROR("Failed to update system. Finishing Systems Update Task now");
-            return this->TASK_DONE;
-        }
-    }
-    return this->TASK_CONTINUE;
-}
-
-void SystemsUpdateTask::register_system(System &sys)
-{
-    this->systems.push_back(&sys);
-}
-
-
-} // namespace sys
-} // namespace core
-} // namespace kage
-
-
+#endif // KAGE_CORE_GLOBALS_HH_

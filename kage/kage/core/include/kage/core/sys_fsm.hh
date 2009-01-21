@@ -16,10 +16,10 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef FSM_HH_
-#define FSM_HH_
+#ifndef KAGE_CORE_SYS_FSM_HH_
+#define KAGE_CORE_SYS_FSM_HH_
 
-#include "kage/globals.hh"
+#include "kage/core/globals.hh"
 
 namespace kage {
 namespace core {
@@ -90,4 +90,4 @@ class FiniteStateMachine
 } // namespace core
 } // namespace kage
 
-#endif // FSM_HH_
+#endif // KAGE_CORE_SYS_FSM_HH_

@@ -16,20 +16,36 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "kage/logging.hh"
+#include "kage/core/sys_system.hh"
+
+static log4cxx::LoggerPtr logger(log4cxx::Logger::getLogger(
+        "kage.core.sys.system"));
 
 namespace kage {
 namespace core {
-namespace logging {
+namespace sys {
 
 
-void setup_logging(void)
+Task::ExitCode SystemsUpdateTask::run(const TaskInfo &ti)
 {
-    log4cxx::BasicConfigurator::configure();
+    std::vector<System*>::iterator it;
+    for (it=this->systems.begin(); it != this->systems.end(); ++it) {
+        if (!(*it)->update()) {
+            LOG_ERROR("Failed to update system. Finishing Systems Update Task now");
+            return this->TASK_DONE;
+        }
+    }
+    return this->TASK_CONTINUE;
+}
+
+void SystemsUpdateTask::register_system(System &sys)
+{
+    this->systems.push_back(&sys);
 }
 
 
-} // namespace logging
+} // namespace sys
 } // namespace core
 } // namespace kage
+
 

@@ -16,11 +16,10 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KAGE_SYSTEM_HH_
-#define KAGE_SYSTEM_HH_
+#ifndef KAGE_CORE_SYS_SYSTEM_HH_
+#define KAGE_CORE_SYS_SYSTEM_HH_
 
-#include "kage/globals.hh"
-#include "kage/task.hh"
+#include "kage/core/sys_task.hh"
 
 namespace kage {
 namespace core {
@@ -39,7 +38,7 @@ class System
     public:
         virtual ~System(void) { }
 
-        /* Setup System. Returns true on succes */
+        /* Setup System. Returns true on success */
         virtual bool setup(Application &app) = 0;
 
         /* Called after all Systems for an Application have been setup. Returns true if is ok to
@@ -73,5 +72,5 @@ class SystemsUpdateTask : public Task
 } // namespace core
 } // namespace kage
 
-#endif // KAGE_SYSTEM_HH_
+#endif // KAGE_CORE_SYS_SYSTEM_HH_
 
