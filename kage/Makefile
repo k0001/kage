@@ -1,6 +1,9 @@
 .PHONY: clean all
 
-INCLUDES = $(shell pkg-config --cflags OGRE OIS liblog4cxx) -Iinclude
+INCLUDES = $(shell pkg-config --cflags OGRE OIS liblog4cxx) \
+	   -Ikage/core/include \
+	   -Ikage/ogre/include \
+	   -Ikage/ois/include
 
 LIBS = $(shell pkg-config --libs OGRE OIS liblog4cxx)
 
@@ -8,13 +11,13 @@ CXXFLAGS = -fPIC -O2 -g -Wall -fmessage-length=0 -ggdb -Wno-deprecated
 
 DEFINES = -DDEBUG
 
-OBJS = build/kage/fsm.o \
-       build/kage/task.o \
-       build/kage/application.o \
-       build/kage/system.o \
-       build/kage/sys_graphics_ogre.o \
-       build/kage/sys_input_ois.o \
-       build/kage/logging.o
+OBJS = kage/core/src/kage/core/sys_application.o \
+       kage/core/src/kage/core/sys_fsm.o \
+       kage/core/src/kage/core/sys_system.o \
+       kage/core/src/kage/core/sys_task.o \
+       kage/core/src/kage/core/utils_logging.o \
+       kage/ogre/src/kage/ogre/graphics_system.o \
+       kage/ois/src/kage/ois/input_system.o \
 
 TARGET_NAME = libkage
 MAJOR = 0
@@ -41,7 +44,7 @@ $(STATIC_TARGET): $(OBJS)
 	ln -sf $(STATIC_MINOR) $(STATIC_MAJOR)
 	ln -sf $(STATIC_MAJOR) $(STATIC_TARGET)
 
-build/kage/%.o: src/kage/%.cc
+%.o: %.cc
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $? -o $@
 
 clean:
