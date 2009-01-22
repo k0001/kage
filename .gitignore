@@ -4,13 +4,13 @@
 *.o
 *.lo
 *.la
-*.in
 *.so
 *.so.*
 *.a
 *.a.*
 kage/tags
 Makefile
+Makefile.in
 .deps
 .libs
 aclocal.m4
@@ -20,6 +20,7 @@ config.log
 config.status
 config.sub
 configure
+configure.in
 depcomp
 install-sh
 libtool
