@@ -1,9 +1,6 @@
 .PHONY: clean all
 
-INCLUDES = $(shell pkg-config --cflags OGRE OIS liblog4cxx) \
-	   -Ikage/core/include \
-	   -Ikage/ogre/include \
-	   -Ikage/ois/include
+INCLUDES = $(shell pkg-config --cflags OGRE OIS liblog4cxx) -Iinclude
 
 LIBS = $(shell pkg-config --libs OGRE OIS liblog4cxx)
 
@@ -11,13 +8,13 @@ CXXFLAGS = -fPIC -O2 -g -Wall -fmessage-length=0 -ggdb -Wno-deprecated
 
 DEFINES = -DDEBUG
 
-OBJS = kage/core/src/kage/core/sys_application.o \
-       kage/core/src/kage/core/sys_fsm.o \
-       kage/core/src/kage/core/sys_system.o \
-       kage/core/src/kage/core/sys_task.o \
-       kage/core/src/kage/core/utils_logging.o \
-       kage/ogre/src/kage/ogre/graphics_system.o \
-       kage/ois/src/kage/ois/input_system.o \
+OBJS = src/kage/core/sys_application.o \
+       src/kage/core/sys_fsm.o \
+       src/kage/core/sys_system.o \
+       src/kage/core/sys_task.o \
+       src/kage/core/utils_logging.o \
+       src/kage/ogre/graphics_system.o \
+       src/kage/ois/input_system.o \
 
 TARGET_NAME = libkage
 MAJOR = 0
