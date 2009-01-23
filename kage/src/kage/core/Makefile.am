@@ -12,7 +12,7 @@ libkage_la_SOURCES = sys_application.cc \
 libkage_la_LDFLAGS = -version-info $(LIBKAGE_VERSION_INFO) -release $(LIBKAGE_RELEASE)
 libkage_la_LIBADD = $(DEPS_LIBS)
 
-library_includedir = $(includedir)/kage/kage/core
+library_includedir = $(includedir)/kage/core
 library_include_HEADERS = @top_srcdir@/include/kage/core/core.hh \
                           @top_srcdir@/include/kage/core/globals.hh \
                           @top_srcdir@/include/kage/core/graphics_system.hh \
@@ -25,4 +25,4 @@ library_include_HEADERS = @top_srcdir@/include/kage/core/core.hh \
 
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = kage-$(LIBKAGE_RELEASE).pc
+pkgconfig_DATA = kage.pc
