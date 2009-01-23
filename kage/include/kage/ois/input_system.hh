@@ -19,7 +19,7 @@
 #ifndef KAGE_OIS_INPUT_SYSTEM_HH_
 #define KAGE_OIS_INPUT_SYSTEM_HH_
 
-#include "kage/core/input_system.hh"
+#include <kage/core/input_system.hh>
 
 namespace kage {
 namespace ois {

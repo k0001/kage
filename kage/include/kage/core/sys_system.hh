@@ -19,7 +19,7 @@
 #ifndef KAGE_CORE_SYS_SYSTEM_HH_
 #define KAGE_CORE_SYS_SYSTEM_HH_
 
-#include "kage/core/sys_task.hh"
+#include <kage/core/sys_task.hh>
 
 namespace kage {
 namespace core {

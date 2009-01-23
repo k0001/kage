@@ -19,6 +19,6 @@
 #ifndef KAGE_OGRE_HH_
 #define KAGE_OGRE_HH_
 
-#include "kage/ogre/graphics_system.hh"
+#include <kage/ogre/graphics_system.hh>
 
 #endif // KAGE_OGRE_HH_

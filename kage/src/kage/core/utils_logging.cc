@@ -16,7 +16,7 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "kage/core/utils_logging.hh"
+#include <kage/core/utils_logging.hh>
 
 namespace kage {
 namespace core {

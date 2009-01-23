@@ -16,8 +16,8 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "kage/ois/input_system.hh"
-#include "kage/core/sys_application.hh"
+#include <kage/ois/input_system.hh>
+#include <kage/core/sys_application.hh>
 
 static log4cxx::LoggerPtr logger(log4cxx::Logger::getLogger(
         "kage.ois.input.system"));

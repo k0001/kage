@@ -19,7 +19,7 @@
 #ifndef KAGE_CORE_GRAPHICS_SYSTEM_HH_
 #define KAGE_CORE_GRAPHICS_SYSTEM_HH_
 
-#include "kage/core/sys_system.hh"
+#include <kage/core/sys_system.hh>
 
 namespace kage {
 namespace core {

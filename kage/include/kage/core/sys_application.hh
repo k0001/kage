@@ -19,11 +19,11 @@
 #ifndef KAGE_CORE_SYS_APPLICATION_HH_
 #define KAGE_CORE_SYS_APPLICATION_HH_
 
-#include "kage/core/globals.hh"
-#include "kage/core/sys_fsm.hh"
-#include "kage/core/sys_task.hh"
-#include "kage/core/graphics_system.hh"
-#include "kage/core/input_system.hh"
+#include <kage/core/globals.hh>
+#include <kage/core/sys_fsm.hh>
+#include <kage/core/sys_task.hh>
+#include <kage/core/graphics_system.hh>
+#include <kage/core/input_system.hh>
 
 namespace kage {
 namespace core {

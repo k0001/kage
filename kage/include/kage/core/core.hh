@@ -19,13 +19,13 @@
 #ifndef KAGE_CORE_HH_
 #define KAGE_CORE_HH_
 
-#include "kage/core/globals.hh"
-#include "kage/core/sys_application.hh"
-#include "kage/core/sys_fsm.hh"
-#include "kage/core/sys_task.hh"
-#include "kage/core/sys_system.hh"
-#include "kage/core/utils_logging.hh"
-#include "kage/core/graphics_system.hh"
-#include "kage/core/input_system.hh"
+#include <kage/core/globals.hh>
+#include <kage/core/sys_application.hh>
+#include <kage/core/sys_fsm.hh>
+#include <kage/core/sys_task.hh>
+#include <kage/core/sys_system.hh>
+#include <kage/core/utils_logging.hh>
+#include <kage/core/graphics_system.hh>
+#include <kage/core/input_system.hh>
 
 #endif // KAGE_CORE_HH_

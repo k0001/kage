@@ -16,8 +16,8 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "kage/core/sys_application.hh"
-#include "kage/ogre/graphics_system.hh"
+#include <kage/core/sys_application.hh>
+#include <kage/ogre/graphics_system.hh>
 
 
 static log4cxx::LoggerPtr logger(log4cxx::Logger::getLogger(

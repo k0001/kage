@@ -16,7 +16,7 @@
  * along with Kage.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "kage/core/sys_system.hh"
+#include <kage/core/sys_system.hh>
 
 static log4cxx::LoggerPtr logger(log4cxx::Logger::getLogger(
         "kage.core.sys.system"));

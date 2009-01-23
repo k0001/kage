@@ -31,6 +31,6 @@
 // third party
 #include <boost/shared_ptr.hpp>
 
-#include "kage/core/utils_logging.hh"
+#include <kage/core/utils_logging.hh>
 
 #endif // KAGE_CORE_GLOBALS_HH_

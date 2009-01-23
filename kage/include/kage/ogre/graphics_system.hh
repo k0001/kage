@@ -19,7 +19,7 @@
 #ifndef KAGE_OGRE_GRAPHICS_SYSTEM_HH_
 #define KAGE_OGRE_GRAPHICS_SYSTEM_HH_
 
-#include "kage/core/graphics_system.hh"
+#include <kage/core/graphics_system.hh>
 #include <Ogre.h>
 
 

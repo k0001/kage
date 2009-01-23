@@ -19,6 +19,6 @@
 #ifndef KAGE_OIS_HH_
 #define KAGE_OIS_HH_
 
-#include "kage/ois/input_system.hh"
+#include <kage/ois/input_system.hh>
 
 #endif // KAGE_OIS_HH_
