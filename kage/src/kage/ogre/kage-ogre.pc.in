@@ -3,7 +3,7 @@ exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
 
-Name: kage
+Name: kage-ogre
 Description: Kage's A Game Engine OGRE 3D Graphics Engine integration library.
 Requires: kage OGRE
 Version: @VERSION@

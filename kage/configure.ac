@@ -18,6 +18,7 @@ AC_OUTPUT(Makefile \
           src/kage/ogre/Makefile \
           src/kage/ogre/kage-ogre.pc \
           src/kage/ois/Makefile \
+          src/kage/ois/kage-ois.pc \
           include/Makefile \
           include/kage/Makefile \
           include/kage/core/Makefile \
