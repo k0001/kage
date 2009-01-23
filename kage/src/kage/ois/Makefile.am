@@ -1,3 +1,5 @@
+if WITH_OIS
+
 LIBKAGE_OIS_RELEASE = 0.1
 LIBKAGE_OIS_VERSION_INFO = 0:0:0
 
@@ -14,3 +16,5 @@ library_include_HEADERS = @top_srcdir@/include/kage/ois/ois.hh \
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = kage-ois.pc
+
+endif

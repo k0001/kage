@@ -1,5 +1,7 @@
-LIBKAGE_OGRE_RELEASE = 0.1
-LIBKAGE_OGRE_VERSION_INFO = 0:0:0
+if WITH_OGRE
+
+LIBKAGE_OGRE_RELEASE = 1.1
+LIBKAGE_OGRE_VERSION_INFO = 1:0:0
 
 INCLUDES = $(DEP_OGRE_CFLAGS) -I@top_srcdir@/include
 
@@ -14,3 +16,5 @@ library_include_HEADERS = @top_srcdir@/include/kage/ogre/ogre.hh \
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = kage-ogre.pc
+
+endif
