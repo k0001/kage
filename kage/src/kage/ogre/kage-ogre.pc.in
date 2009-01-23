@@ -8,4 +8,4 @@ Description: Kage's A Game Engine OGRE 3D Graphics Engine integration library.
 Requires: kage OGRE
 Version: @VERSION@
 Libs: -L${libdir} -lkage-ogre
-Cflags: -I${includedir}/kage
+Cflags: -I${includedir}

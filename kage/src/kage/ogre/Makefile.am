@@ -9,7 +9,8 @@ libkage_ogre_la_LDFLAGS = -version-info $(LIBKAGE_OGRE_VERSION_INFO) -release $(
 libkage_ogre_la_LIBADD = $(DEP_OGRE_LIBS)
 
 library_includedir = $(includedir)/kage/ogre
-library_include_HEADERS = @top_srcdir@/include/kage/ogre/graphics_system.hh
+library_include_HEADERS = @top_srcdir@/include/kage/ogre/ogre.hh \
+                          @top_srcdir@/include/kage/ogre/graphics_system.hh
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = kage-ogre.pc

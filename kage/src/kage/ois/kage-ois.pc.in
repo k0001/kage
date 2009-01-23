@@ -8,4 +8,4 @@ Description: Kage's A Game Engine OIS Input System integration library.
 Requires: kage OIS
 Version: @VERSION@
 Libs: -L${libdir} -lkage-ois
-Cflags: -I${includedir}/kage
+Cflags: -I${includedir}

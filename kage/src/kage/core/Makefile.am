@@ -1,7 +1,7 @@
 LIBKAGE_RELEASE = 0.1
 LIBKAGE_VERSION_INFO = 0:0:0
 
-INCLUDES = $(DEP_OIS_CFLAGS) -I@top_srcdir@/include
+INCLUDES = $(DEP_OIS_CFLAGS) $(DEP_LOG4CXX_LIBS) -I@top_srcdir@/include
 
 lib_LTLIBRARIES = libkage.la
 libkage_la_SOURCES = sys_application.cc \
@@ -10,7 +10,7 @@ libkage_la_SOURCES = sys_application.cc \
                         sys_task.cc \
                         utils_logging.cc
 libkage_la_LDFLAGS = -version-info $(LIBKAGE_VERSION_INFO) -release $(LIBKAGE_RELEASE)
-libkage_la_LIBADD = $(DEP_OIS_LIBS)
+libkage_la_LIBADD = $(DEP_OIS_LIBS) $(DEP_LOG4CXX_LIBS)
 
 library_includedir = $(includedir)/kage/core
 library_include_HEADERS = @top_srcdir@/include/kage/core/core.hh \
