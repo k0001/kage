@@ -4,9 +4,8 @@ AM_INIT_AUTOMAKE(kage,0.1)
 AC_PROG_CC
 AC_PROG_CXX
 
-PKG_CHECK_MODULES(DEPS, OIS >= 1.2)
-AC_SUBST(DEPS_CFLAGS)
-AC_SUBST(DEPS_LIBS)
+PKG_CHECK_MODULES(DEP_OIS, OIS >= 1.2)
+PKG_CHECK_MODULES(DEP_OGRE, OGRE >= 1.6)
 
 AC_PROG_INSTALL
 AC_PROG_LIBTOOL
@@ -17,6 +16,7 @@ AC_OUTPUT(Makefile \
           src/kage/core/Makefile \
           src/kage/core/kage.pc \
           src/kage/ogre/Makefile \
+          src/kage/ogre/kage-ogre.pc \
           src/kage/ois/Makefile \
           include/Makefile \
           include/kage/Makefile \

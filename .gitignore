@@ -8,6 +8,7 @@
 *.so.*
 *.a
 *.a.*
+*.pc
 kage/tags
 Makefile
 Makefile.in
