@@ -10,8 +10,8 @@ LIBKAGE_LIBADD = $(DEP_LOG4CXX_LIBS) \
 
 LIBKAGE_SOURCES = $(top_srcdir)/src/kage/core/sys_application.cc \
                   $(top_srcdir)/src/kage/core/sys_fsm.cc \
-                  $(top_srcdir)/src/kage/core/sys_system.cc \
                   $(top_srcdir)/src/kage/core/sys_task.cc \
+                  $(top_srcdir)/src/kage/core/sys_system.cc \
                   $(top_srcdir)/src/kage/core/utils_logging.cc
 
 
@@ -31,8 +31,6 @@ lib_LTLIBRARIES = libkage.la
 libkage_la_SOURCES = $(LIBKAGE_SOURCES)
 libkage_la_LDFLAGS = -version-info $(LIBKAGE_VERSION_INFO) -release $(LIBKAGE_RELEASE)
 libkage_la_LIBADD = $(LIBKAGE_LIBADD)
-
-library_includedir = $(includedir)/kage
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = $(top_srcdir)/src/kage/kage.pc

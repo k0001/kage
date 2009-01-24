@@ -64,7 +64,8 @@ class Task {
          * should happen with the Task before the next execution happens. */
         enum ExitCode {
             TASK_DONE,       // Stop running the Task
-            TASK_CONTINUE    // Continue running the Task
+            TASK_CONTINUE,   // Continue running the Task
+            TASK_FATAL       // Something wrong happened within the Task. TaskManager should stop.
         };
 
         Task(void);

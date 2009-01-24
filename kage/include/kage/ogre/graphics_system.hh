@@ -83,9 +83,6 @@ class OgreGraphicSystem : public kage::core::graphics::GraphicSystem
 
         /* Ogre important stuff */
         Ogre::Root *root;
-
-        /* Application pointer */
-        kage::core::sys::Application *app;
 };
 
 

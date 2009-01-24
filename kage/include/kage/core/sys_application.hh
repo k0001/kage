@@ -54,19 +54,20 @@ class Application
         kage::core::input::InputSystem *sys_input;
 
         std::string get_name(void) const { return this->name; }
-    protected:
-        /* Prepare Systems for exceution by calling their after_setup method and adding their
-         * update method to the TaskManager. Returns true on success */
-        bool prepare_systems(void);
+
+        /* Signals. Systems can hook themselves here to add Tasks to the TaskManager, etc */
+        boost::signal<void (void)> pre_run;
+        boost::signal<void (void)> post_run;
+
+        /* Task Manager */
+        TaskManager task_mgr;
 
         /* Application name */
         std::string name;
-        /* Task Manager */
-        TaskManager task_mgr;
+
+    protected:
         /* Game Screens FSM */
         FiniteStateMachine game_screens;
-        /* Systems update task */
-        SystemsUpdateTask systems_update_task;
 };
 
 

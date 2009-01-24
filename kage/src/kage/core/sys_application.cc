@@ -39,10 +39,9 @@ Application::Application(const std::string &name)
 
 void Application::run(void)
 {
-    if (!this->prepare_systems()) {
-        throw "Couldn't prepare Systems for execution";
-    }
+    this->pre_run();
     this->task_mgr.run();
+    this->post_run();
 }
 
 bool Application::set_graphic_system(kage::core::graphics::GraphicSystem &sys)
@@ -64,27 +63,6 @@ bool Application::set_input_system(kage::core::input::InputSystem &sys)
     }
     this->sys_input = &sys;
     LOG_INFO("Input System initialized");
-    return true;
-}
-
-bool Application::prepare_systems(void)
-{
-    if (this->sys_graphic) {
-        if (!this->sys_graphic->after_setup()) {
-            LOG_ERROR("Graphic System after_setup failed");
-            return false;
-        }
-        this->systems_update_task.register_system(*this->sys_graphic);
-    }
-    if (this->sys_input) {
-        if (!this->sys_input->after_setup()) {
-            LOG_ERROR("Input System after_setup failed");
-            return false;
-        }
-        this->systems_update_task.register_system(*this->sys_input);
-    }
-    LOG_INFO("Systems ready");
-    this->task_mgr.add_task(this->systems_update_task, "Systems Update Task");
     return true;
 }
 

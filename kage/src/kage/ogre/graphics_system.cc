@@ -34,10 +34,10 @@ OgreGraphicSystem::OgreGraphicSystem(const std::string &conf_path,
                                      const std::string &ogre_cfg,
                                      const std::string &resources_cfg,
                                      const std::string &ogre_log_file_path)
-    : conf_path(conf_path)
+    : kage::core::graphics::GraphicSystem()
+    , conf_path(conf_path)
     , ogre_log_file_path(ogre_log_file_path)
     , root(NULL)
-    , app(NULL)
 {
     // Setup configuration files paths
     if (this->conf_path.length())
@@ -74,6 +74,9 @@ OgreGraphicSystem::~OgreGraphicSystem(void)
 
 bool OgreGraphicSystem::setup(kage::core::sys::Application &app)
 {
+    if (!kage::core::graphics::GraphicSystem::setup(app))
+        return false;
+
     LOG_INFO("Setting up Ogre Application");
 
     if (this->setup_root()) {
@@ -115,7 +118,6 @@ bool OgreGraphicSystem::setup(kage::core::sys::Application &app)
         LOG_ERROR("Failed to initialise resource group");
         return false;
     }
-
     this->app = &app;
     return true;
 }

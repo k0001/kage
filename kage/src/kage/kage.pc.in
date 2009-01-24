@@ -6,5 +6,5 @@ includedir=@includedir@
 Name: kage
 Description: Kage's A Game Engine library.
 Version: @VERSION@
-Libs: -L${libdir} -lkage
+Libs: -L${libdir} -lkage -lboost_signals
 Cflags: -I${includedir}

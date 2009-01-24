@@ -95,10 +95,6 @@ class OISBufferedInputSystem : public kage::core::input::BufferedInputSystem
         /* Setup System. Returns true on success */
         bool setup(kage::core::sys::Application &app);
 
-        /* Called after all Systems for an Application have been setup.
-         * Attaches OIS input_manager to the window handle provided by this->app's sys_graphic */
-        virtual bool after_setup(void);
-
         /* Set input handlers, return true on success */
         bool set_keyboard_input_handler(kage::core::input::BufferedInputHandler &handler);
         bool set_mouse_input_handler(kage::core::input::BufferedInputHandler &handler);
@@ -106,6 +102,10 @@ class OISBufferedInputSystem : public kage::core::input::BufferedInputSystem
         /* Unset input handlers */
         void unset_keyboard_input_handler(void);
         void unset_mouse_input_handler(void);
+
+        /* App's pre_run slots */
+        /* Attaches OIS input_manager to the window handle provided by this->app's sys_graphic */
+        void ois_input_manager_setup(void);
 
     protected:
         /* Capture input. Must be called from update() */
@@ -125,9 +125,6 @@ class OISBufferedInputSystem : public kage::core::input::BufferedInputSystem
         /* Devices enabled? */
         bool keyboard_enabled;
         bool mouse_enabled;
-
-        /* Application this system is attached to */
-        kage::core::sys::Application *app;
 };
 
 

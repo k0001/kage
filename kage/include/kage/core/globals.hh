@@ -30,6 +30,8 @@
 
 // third party
 #include <boost/shared_ptr.hpp>
+#include <boost/signal.hpp>
+#include <boost/bind.hpp>
 
 #include <kage/core/utils_logging.hh>
 

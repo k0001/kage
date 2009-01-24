@@ -17,6 +17,7 @@
  */
 
 #include <kage/core/sys_system.hh>
+#include <kage/core/sys_application.hh>
 
 static log4cxx::LoggerPtr logger(log4cxx::Logger::getLogger(
         "kage.core.sys.system"));
@@ -26,21 +27,16 @@ namespace core {
 namespace sys {
 
 
-Task::ExitCode SystemsUpdateTask::run(const TaskInfo &ti)
-{
-    std::vector<System*>::iterator it;
-    for (it=this->systems.begin(); it != this->systems.end(); ++it) {
-        if (!(*it)->update()) {
-            LOG_ERROR("Failed to update system. Finishing Systems Update Task now");
-            return this->TASK_DONE;
-        }
-    }
-    return this->TASK_CONTINUE;
+bool System::setup(Application &app) {
+    app.pre_run.connect(boost::bind(&System::set_system_update_task, this));
+    this->app = &app;
+    return true;
 }
 
-void SystemsUpdateTask::register_system(System &sys)
+void System::set_system_update_task(void)
 {
-    this->systems.push_back(&sys);
+    SystemUpdateTask *t = new SystemUpdateTask(*this);
+    this->app->task_mgr.add_task(*t);
 }
 
 

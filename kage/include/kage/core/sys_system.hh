@@ -36,10 +36,12 @@ class Application;
 class System
 {
     public:
+        System(void)
+                : app(NULL) { }
         virtual ~System(void) { }
 
-        /* Setup System. Returns true on success */
-        virtual bool setup(Application &app) = 0;
+        /* Setup System basics, this->app and pre/post_run slots. Returns true on success */
+        virtual bool setup(Application &app);
 
         /* Called after all Systems for an Application have been setup. Returns true if is ok to
          * proceed qwith Application execution */
@@ -48,23 +50,35 @@ class System
 
         /* Update system status. Called once per frame. Returns true on success */
         virtual bool update(void) = 0;
-};
 
-
-class SystemsUpdateTask : public Task
-{
-    public:
-        ~SystemsUpdateTask(void) { }
-
-        /* Actual Task code, dispatch calls to every system's update method */
-        Task::ExitCode run(const TaskInfo &ti);
-
-        /* Register a system for updating */
-        void register_system(System &sys);
+        /* App's pre_pre run slot for setting up a SystemUpdateTask for this System */
+        virtual void set_system_update_task(void);
 
     protected:
-        /* Systems registered with this Task */
-        std::vector<System*> systems;
+        /* Application this system is attached to */
+        Application *app;
+};
+
+/*
+ * kage::core::sys::SystemUpdateTask
+ *
+ * Task wrapping System's update method.
+ */
+
+class SystemUpdateTask : public Task
+{
+    public:
+        SystemUpdateTask(System &sys)
+                : sys(&sys) { }
+        virtual ~SystemUpdateTask(void) { }
+
+        /* Actual Task code, dispatch calls to every sys's update method */
+        virtual Task::ExitCode run(const TaskInfo &ti)
+                { return this->sys->update() ? this->TASK_CONTINUE : this->TASK_FATAL; }
+
+    protected:
+        /* System attached to thie Task */
+        System* sys;
 };
 
 

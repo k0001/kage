@@ -40,7 +40,6 @@ OISBufferedInputSystem::OISBufferedInputSystem(bool enable_keyboard,
     , mouse_handler(NULL)
     , keyboard_enabled(enable_keyboard)
     , mouse_enabled(enable_mouse)
-    , app(NULL)
 {
 }
 
@@ -60,21 +59,22 @@ OISBufferedInputSystem::~OISBufferedInputSystem(void)
 
 bool OISBufferedInputSystem::setup(kage::core::sys::Application &app)
 {
-    this->app = &app;
+    if (!kage::core::input::InputSystem::setup(app))
+        return false;
+    this->app->pre_run.connect(boost::bind(&OISBufferedInputSystem::ois_input_manager_setup, this));
     return true;
 }
 
-bool OISBufferedInputSystem::after_setup(void)
+void OISBufferedInputSystem::ois_input_manager_setup(void)
 {
     std::size_t window_handle = this->app->sys_graphic->get_window_handle();
     this->ois_input_manager = OIS::InputManager::createInputSystem(window_handle);
     if (this->keyboard_enabled)
         if (!this->setup_keyboard())
-            return false;
+            throw "Couldnt' setup OIS keyboard";
     if (this->mouse_enabled)
         if (!this->setup_mouse())
-            return false;
-    return true;
+            throw "Couldnt' setup OIS mouse";
 }
 
 bool OISBufferedInputSystem::set_keyboard_input_handler(
