@@ -4,8 +4,7 @@ libdir=@libdir@
 includedir=@includedir@
 
 Name: kage
-Description: Kage's A Game Engine core library.
-Requires: OIS liblog4cxx
+Description: Kage's A Game Engine library.
 Version: @VERSION@
 Libs: -L${libdir} -lkage
 Cflags: -I${includedir}
