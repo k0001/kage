@@ -25,6 +25,7 @@ namespace kage {
 namespace ois {
 namespace input {
 
+
 /*
  * kage::ois::input::BufferedInputHandler
  *
@@ -36,30 +37,9 @@ class OISBufferedInputHandler : public kage::core::input::BufferedInputHandler
                               , public OIS::MouseListener
 {
     public:
-        OISBufferedInputHandler(void) { }
-        virtual ~OISBufferedInputHandler(void) { }
-
-        /* Setup System. Returns true on succes */
-        virtual bool setup(kage::core::sys::Application &app)
-                { return true; }
-
-        /* Called after all Systems for an Application have been setup.
-         * Attaches OIS input_manager to the window handle provided by this->app's sys_graphic */
-        virtual bool after_setup(void);
-
-        /* kage::core::input::BufferedInputHandler keyboard interface */
-        bool key_pressed(const OIS::KeyEvent &arg)
-                { return true; }
-        bool key_released(const OIS::KeyEvent &arg)
-                { return true; }
-
-        /* kage::core::input::BufferedInputHandler mouse interface */
-        bool mouse_moved(const OIS::MouseEvent &arg)
-                { return true; }
-        bool mouse_pressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
-                { return true; }
-        bool mouse_released(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
-                { return true; }
+        OISBufferedInputHandler(void)
+                : kage::core::input::BufferedInputHandler() { }
+        ~OISBufferedInputHandler(void) { };
 
         /* OIS::KeyListener interface */
         /* Definition proxies this OIS methods to the matching methods above */
@@ -122,9 +102,6 @@ class OISBufferedInputSystem : public kage::core::input::BufferedInputSystem
         /* Current BufferedInputHandlers */
         kage::core::input::BufferedInputHandler *keyboard_handler;
         kage::core::input::BufferedInputHandler *mouse_handler;
-        /* Devices enabled? */
-        bool keyboard_enabled;
-        bool mouse_enabled;
 };
 
 

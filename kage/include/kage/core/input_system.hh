@@ -26,16 +26,11 @@ namespace kage {
 namespace core {
 namespace input {
 
+class BufferedInputSystem;
 
-/*
- * kage::core::input::InputSystem
- *
- * Interface for Input Systems that are part of a kage::core::sys::Application
- */
-
-class InputSystem : public kage::core::sys::System
-{
-};
+/* Signal types */
+typedef boost::signal<void (const OIS::KeyEvent &arg)> KeyboardSignal;
+typedef boost::signal<void (const OIS::MouseEvent &arg)> MouseSignal;
 
 
 /*
@@ -47,17 +42,48 @@ class InputSystem : public kage::core::sys::System
 
 class BufferedInputHandler
 {
+    friend class BufferedInputSystem;
+
     public:
-        virtual ~BufferedInputHandler(void) { }
+        BufferedInputHandler(void);
+        virtual ~BufferedInputHandler(void);
 
-        /* Keyboard event listeners */
-        virtual bool key_pressed(const OIS::KeyEvent &arg);
-        virtual bool key_released(const OIS::KeyEvent &arg);
+        /* kage::core::input::BufferedInputHandler keyboard interface */
+        virtual bool key_pressed(const OIS::KeyEvent &arg)
+                { this->key_pressed_signals[arg.key](arg); return true; }
+        virtual bool key_released(const OIS::KeyEvent &arg)
+                { this->key_released_signals[arg.key](arg); return true; }
 
-        /* Mouse event listeners */
-        virtual bool mouse_moved(const OIS::MouseEvent &arg);
-        virtual bool mouse_pressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
-        virtual bool mouse_released(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
+        /* kage::core::input::BufferedInputHandler mouse interface */
+        virtual bool mouse_pressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
+                { this->mouse_pressed_signals[id](arg); return true; }
+        bool mouse_released(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
+                { this->mouse_released_signals[id](arg); return true; }
+        virtual bool mouse_moved(const OIS::MouseEvent &arg)
+                { (*this->mouse_moved_signal)(arg); return true; }
+
+    protected:
+        /* Signals placeholders */
+        KeyboardSignal *key_pressed_signals;
+        KeyboardSignal *key_released_signals;
+        MouseSignal *mouse_pressed_signals;
+        MouseSignal *mouse_released_signals;
+        MouseSignal *mouse_moved_signal;
+};
+
+
+
+/*
+ * kage::core::input::InputSystem
+ *
+ * Interface for Input Systems that are part of a kage::core::sys::Application
+ */
+
+
+class InputSystem : public kage::core::sys::System
+{
+    public:
+        virtual ~InputSystem(void) { }
 };
 
 
@@ -70,18 +96,33 @@ class BufferedInputHandler
 class BufferedInputSystem : public InputSystem
 {
     public:
-        bool update(void)
+        BufferedInputSystem(bool enable_keyboard=true, bool enable_mouse=true);
+        virtual ~BufferedInputSystem(void) { }
+
+        virtual bool update(void)
                 { return this->capture(); }
-        bool setup(kage::core::sys::Application &app)
+        virtual bool setup(kage::core::sys::Application &app)
                 { return this->setup_keyboard() && this->setup_mouse(); }
 
         /* Set input handlers, return true on success */
         virtual bool set_keyboard_input_handler(BufferedInputHandler &handler) = 0;
         virtual bool set_mouse_input_handler(BufferedInputHandler &handler) = 0;
-
         /* Unset input handlers */
         virtual void unset_keyboard_input_handler(void) = 0;
         virtual void unset_mouse_input_handler(void) = 0;
+
+        /* Keyboard Signals Slot connectors */
+        virtual boost::signals::connection on_key_pressed(OIS::KeyCode kc, KeyboardSignal::slot_type &slot)
+                { return this->keyboard_handler->key_pressed_signals[kc].connect(slot); }
+        virtual boost::signals::connection on_key_released(OIS::KeyCode kc, KeyboardSignal::slot_type &slot)
+                { return this->keyboard_handler->key_released_signals[kc].connect(slot); }
+        /* Mouse Signals Slot connectors */
+        virtual boost::signals::connection on_mouse_pressed(OIS::MouseButtonID id, MouseSignal::slot_type &slot)
+                { return this->mouse_handler->mouse_pressed_signals[id].connect(slot); }
+        virtual boost::signals::connection on_mouse_released(OIS::MouseButtonID id, MouseSignal::slot_type &slot)
+                { return this->mouse_handler->mouse_released_signals[id].connect(slot); }
+        virtual boost::signals::connection on_mouse_moved(MouseSignal::slot_type &slot)
+                { return this->mouse_handler->mouse_moved_signal->connect(slot); }
 
     protected:
         /* Capture input. Must be called from update() */
@@ -90,6 +131,12 @@ class BufferedInputSystem : public InputSystem
         virtual bool setup_keyboard(void) = 0;
         /* Setups Mouse input. Returns true on success */
         virtual bool setup_mouse(void) = 0;
+        /* Devices enabled? */
+        bool keyboard_enabled;
+        bool mouse_enabled;
+        /* Current BufferedInputHandlers */
+        BufferedInputHandler *keyboard_handler;
+        BufferedInputHandler *mouse_handler;
 };
 
 

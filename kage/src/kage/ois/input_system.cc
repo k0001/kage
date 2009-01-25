@@ -27,19 +27,17 @@ namespace kage {
 namespace ois {
 namespace input {
 
+
 /*
  * kage::ois::input::OISBufferedInputSystem
  */
 
 OISBufferedInputSystem::OISBufferedInputSystem(bool enable_keyboard,
                                                bool enable_mouse)
-    : ois_input_manager(NULL)
+    : kage::core::input::BufferedInputSystem(enable_keyboard, enable_mouse)
+    , ois_input_manager(NULL)
     , ois_keyboard(NULL)
     , ois_mouse(NULL)
-    , keyboard_handler(NULL)
-    , mouse_handler(NULL)
-    , keyboard_enabled(enable_keyboard)
-    , mouse_enabled(enable_mouse)
 {
 }
 

@@ -26,7 +26,7 @@ AC_MSG_CHECKING([wether to enable OIS support])
 AC_ARG_WITH(ois,
     AC_HELP_STRING([--with-ois], [Add OIS support]),
     with_ois=$withval,
-    with_ois=[no])
+    with_ois=[yes])
 AC_MSG_RESULT($with_ois)
 if test "x$with_ois" = "xyes"; then
     AC_DEFINE(WITH_OIS)
@@ -40,6 +40,9 @@ AC_OUTPUT(Makefile \
           src/Makefile \
           src/kage/Makefile \
           src/kage/kage.pc \
+          src/kage/core/Makefile \
+          src/kage/ogre/Makefile \
+          src/kage/ois/Makefile \
           include/Makefile \
           include/kage/Makefile \
           include/kage/core/Makefile \
